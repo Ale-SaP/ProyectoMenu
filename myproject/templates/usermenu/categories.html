@@ -1,0 +1,12 @@
+<ul class="flex px-4 overflow-x-auto pb-2 border-b border-solid border-black">
+    {% for category in categories %}
+    <li class="text-center">
+        <a href="#" hx-get="usermenu/content/{{ category.name|lower }}" hx-target="#content-section" hx-swap="innerHTML">
+            <div class="m-3 flex h-20 w-20 items-center justify-center rounded-full border-dashed border-2 border-gray-600">
+                {{ category.svg|safe }}
+            </div>
+            <p class="font-md-text">{{ category.name }}</p>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
