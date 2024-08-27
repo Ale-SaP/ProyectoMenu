@@ -1,10 +1,10 @@
 .cta-button {
-    font-family: 'Work Sans', sans-serif;  /* Use Work Sans font, fallback to sans-serif */
-    font-size: 12px;                       /* Default to 16px for mobile */
-    font-weight: 600;                      /* Regular font weight */
-    letter-spacing: -0.06em;               /* -6% letter spacing */
-    text-align: left;                      /* Left aligned text */
-    margin: 0;                             /* No paragraph spacing */
-    line-height: 0;                      /* Line height for mobile */
+    font-family: 'Work Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    text-align: left;
+    margin: 0;
+    line-height: 0;
     background-color: #ED8000;
 }

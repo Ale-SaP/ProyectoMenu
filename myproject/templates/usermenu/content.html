@@ -1,41 +1,90 @@
 <ul class="mt-0 px-2 space-y-4">
-    {% for row in rows %}
-    <li class="flex border-b border-dashed pb-4">
-        
-        <!-- Left: image -->
-        <div class="flex w-1/4 justify-center items-center">
-            <img src="{{ row.image }}" alt="{{ row.image_alt }}" class="h-24 w-24 rounded-lg ">
-        </div>
-        
-        <!-- Right: content (3/4) -->
-        <div class="flex flex-col w-3/4 pl-4">
-            
-            <!-- Top Row: title and price -->
-            <div class="flex justify-between items-start gap-2">
-                <h3 class="font-subtitle-lg w-2/3 sm:w-4/5">{{ row.title }}</h3>
-                <div class="flex justify-end items-end w-1/3 sm:w-1/5">
-                    <p class="font-subtitle-lg">{{ row.price }}</p>
-                </div>
-            </div>
-            
-            <!-- Middle Row: description -->
-            <div class="flex justify-between items-start gap-2">
-                <p class="font-text-md w-2/3 sm:w-4/5 overflow-y-auto h-full max-h-16">{{ row.description }}</p>
-            
-                <!-- Bottom Row: shopping cart button -->
-                <div class="flex justify-end items-end mt-auto w-1/3 sm:w-1/5">
-                    <button class="px-4 py-2 rounded cta-button">
-                        <svg width="20" height="20" viewBox="0 0 20 20" class="bg-[#ED8000]" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M17.5436 9.58333L17.7756 8.19984C17.9271 7.29523 18.003 6.84293 17.7602 6.54647C17.5174 6.25 17.0711 6.25 16.1786 6.25H3.82135C2.92882 6.25 2.48256 6.25 2.23975 6.54647C1.99695 6.84293 2.07277 7.29523 2.22442 8.19984L3.22739 14.1828C3.55982 16.1659 3.72604 17.1574 4.40469 17.7454C5.08334 18.3333 6.06161 18.3333 8.01816 18.3333H9.99998" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M11.6667 15H18.3334M15 18.3333V11.6667" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M14.5834 6.25002C14.5834 3.71871 12.5314 1.66669 10 1.66669C7.46871 1.66669 5.41669 3.71871 5.41669 6.25002" stroke="white" stroke-width="1.5"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+  {% for row in rows %}
+  <li class="flex border-b border-dashed pb-4">
+    <!-- Left: image -->
+    <div class="flex w-1/4 justify-center items-center">
+      <img
+        src="{{ row.image }}"
+        alt="{{ row.image_alt }}"
+        class="h-24 w-24 rounded-lg"
+      />
+    </div>
 
+    <!-- Right: content (3/4) -->
+    <div class="flex flex-col w-3/4 pl-4">
+      <!-- Top Row: title and price -->
+      <div class="flex justify-between items-start gap-2">
+        <h3 class="font-subtitle-lg w-2/3 sm:w-4/5">{{ row.title }}</h3>
+        <div class="flex justify-end items-end w-1/3 sm:w-1/5">
+          <p class="font-subtitle-lg">{{ row.price }}</p>
         </div>
-        
-    </li>
-    {% endfor %}
+      </div>
+
+      <!-- Middle Row: description -->
+      <div class="flex justify-between items-start gap-2">
+        <p class="font-text-md w-2/3 sm:w-4/5 overflow-y-auto h-full max-h-16">
+          {{ row.description }}
+        </p>
+
+        <!-- Bottom Row: shopping cart button -->
+        <div class="flex justify-end items-end mt-auto w-1/3 sm:w-1/5">
+          <button
+            class="px-4 py-2 rounded cta-button"
+            hx-get="/usermenu/modal_content/{{ row.category_id }}-{{ row.id }}"
+            hx-target="#modal-content"
+            hx-trigger="click"
+            hx-swap="innerHTML"
+            hx-on="htmx:afterRequest: document.getElementById('modal').classList.remove('hidden')"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              class="bg-[#ED8000]"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.5436 9.58333L17.7756 8.19984C17.9271 7.29523 18.003 6.84293 17.7602 6.54647C17.5174 6.25 17.0711 6.25 16.1786 6.25H3.82135C2.92882 6.25 2.48256 6.25 2.23975 6.54647C1.99695 6.84293 2.07277 7.29523 2.22442 8.19984L3.22739 14.1828C3.55982 16.1659 3.72604 17.1574 4.40469 17.7454C5.08334 18.3333 6.06161 18.3333 8.01816 18.3333H9.99998"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M11.6667 15H18.3334M15 18.3333V11.6667"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M14.5834 6.25002C14.5834 3.71871 12.5314 1.66669 10 1.66669C7.46871 1.66669 5.41669 3.71871 5.41669 6.25002"
+                stroke="white"
+                stroke-width="1.5"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
 </ul>
+
+<!-- Modal Background Overlay -->
+<div
+  id="modal-overlay"
+  class="fixed inset-0 bg-black bg-opacity-75 hidden z-40"
+></div>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+  <div class="flex items-center justify-center min-h-screen md:min-h-lg md:min-w-lg">
+    <!-- Modal content -->
+    <div
+      id="modal-content"
+      class="bg-white rounded-lg shadow-xl h-full"
+    >
+      <!-- Modal content will be dynamically inserted here -->
+    </div>
+  </div>
+</div>

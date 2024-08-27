@@ -1,58 +1,82 @@
 [
-    {
-        "title": "Guitarra Electrica Slick Guitars Sl60m Wh Melody Maker",
-        "description": "Color: White Forma del cuerpo: SG - Style Número de cuerdas: 6 cuerdas Construcción mástil: Atornillado Número de trastes: 22 Longitud escala: 24,75&quot; (62,87 ...",
-        "image": "https://acdn.mitiendanube.com/stores/969/083/products/d_670191-mla40647458346_022020-o-0477e0d26bb504422915992406977435-1024-1024.jpg",
-        "image_alt": "Guitarra Electrica Slick Guitars Sl60m Wh Melody Maker",
-        "price": "$ 235.500"
-    },
-    {
-        "title": "Guitarra Electrica Slick Guitars Sl57 TV Yellow Stratocaster",
-        "description": "Color: Tv Yellow Construcción: Cuerpo sólido Forma del cuerpo: Modelo Strat Número de cuerdas: 6 cuerdas Construcción mástil: Atornillado Número de trastes: ...",
-        "image": "https://acdn.mitiendanube.com/stores/969/083/products/whatsapp-image-2021-10-19-at-5-16-39-pm-51-76867d4e867dbc2a0b16346768169765-1024-1024.jpeg",
-        "image_alt": "Guitarra Electrica Slick Guitars Sl57 TV Yellow Stratocaster",
-        "price": "$ 241.500"
-    },
-    {
-        "title": "Guitarra Electrica Slick Guitars Sl60m Bwn Melody Maker",
-        "description": "Color: Brown Woodgrain Forma del cuerpo: SG - Style Número de cuerdas: 6 cuerdas Construcción mástil: Atornillado Número de trastes: 22 Longitud escala: 24,7...",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn-aL5hgBE92SJcHG5hcu55TWDj5BbcFeg-A&s",
-        "image_alt": "Guitarra Electrica Slick Guitars Sl60m Bwn Melody Maker",
-        "price": "$ 243.300"
-    },
-    {
-        "title": "Guitarra Electrica Chapman Ghost Fret Lh Midnight Para Zurdo",
-        "description": "CHAPMAN GHOST FRET LH ZURDA Midnight Sky HEAD.Straight Guardian Headstock TUNERS Chapman Classic Closed (18:1 Gearing) STRING NUT 43mm Graph Tech Black TUSQ ...",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq-KRQxqwIXN_JuQZkU9fvaDfzQRXrWk1tKQ&s",
-        "image_alt": "Guitarra Electrica Chapman Ghost Fret Lh Midnight Para Zurdo",
-        "price": "$ 450.800"
-    },
-    {
-        "title": "Guitarra Cort G250 Lh Bk Para Zurdo G Series",
-        "description": "G SERIES. CORT GUITARRA ELECTRICA DE 6 CUERDAS PARA ZURDOS G 250LH BK. Guitarra de diseño clásico con doble cutaway. Cuerpo de tilo. Mástil Bolt-on de arce c...",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRop42SB96WanJBdKQPrIMVViPDngNf_q_eiA&s",
-        "image_alt": "Guitarra Cort G250 Lh Bk Para Zurdo G Series",
-        "price": "$ 550.800"
-    },
-    {
-        "title": "Guitarra Eléctrica Soloking Les Paul SLS60 QM Deluxe Black Aqua",
-        "description": "One Piece African Mahogany Neck - Neck Dimension : 21mm (1st Fret) and 22.5 mm (12th Fret) - Fretboard Width : 43mm (1st Fret) and 56mm (12th fret) - Ros...",
-        "image": "https://media.yoper.com.ar/argentina/products/49/3d41d656-6b58-4ad5-b2ab-99d514d85c26.png?v=1",
-        "image_alt": "Guitarra Eléctrica Soloking Les Paul SLS60 QM Deluxe Black Aqua",
-        "price":  "$ 580.500"
-    },
-    {
-        "title": "Guitarra Eléctrica Soloking Stratocaster MS1 Custom 22 HSS Pelham Blue",
-        "description": "Alder body with flat top and extended back cutaway and side natural binding - Modern D Quartersawn Neck Shape with Canadian Roasted Maple - Roasted Map...",
-        "image": "https://media.yoper.com.ar/argentina/products/49/04b93831-020b-4cc6-b1b8-6b85336a3c66.jpg?v=1",
-        "image_alt": "Guitarra Eléctrica Soloking Stratocaster MS1 Custom 22 HSS Pelham Blue",
-        "price": "$ 600.000"
-    },
-    {
-        "title": "Guitarra Electrica Jet Guitars JS450 TBL Stratocaster HSS",
-        "description": "¡Bienvenido a JET Guitars! JET Guitars es una nueva marca de guitarras eléctricas creada para el disfrute de músicos de todos los niveles y habilidades. In...",
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcrcFK37pKNVEqWRTJzmozOyBf9oViL3MlJg&s",
-        "image_alt": "Guitarra Electrica Jet Guitars JS450 TBL Stratocaster HSS",
-        "price": "$ 610.000"
-    }
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "1",
+    "title": "Guitarra Electrica Slick Guitars Sl60m Wh Melody Maker",
+    "description": "Color: White Forma del cuerpo: SG - Style Número de cuerdas: 6 cuerdas Construcción mástil: Atornillado Número de trastes: 22 Longitud escala: 24,75&quot; (62,87 ...",
+    "image": "https://acdn.mitiendanube.com/stores/969/083/products/d_67019mla40647458346_022020-o-0477e0d26bb504422915992406977435-1024-1024.jpg",
+    "image_alt": "Guitarra Electrica Slick Guitars Sl60m Wh Melody Maker",
+    "price": "235.500"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "2",
+    "title": "Guitarra Electrica Slick Guitars Sl57 TV Yellow Stratocaster",
+    "description": "Color: Tv Yellow Construcción: Cuerpo sólido Forma del cuerpo: Modelo Strat Número de cuerdas: 6 cuerdas Construcción mástil: Atornillado Número de trastes: ...",
+    "image": "https://acdn.mitiendanube.com/stores/969/083/products/whatsapp-image-20210-19-at-5-16-39-pm-576867d4e867dbc2a0b16346768169765-1024-1024.jpeg",
+    "image_alt": "Guitarra Electrica Slick Guitars Sl57 TV Yellow Stratocaster",
+    "price": "241.500"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "3",
+    "title": "Guitarra Electrica Slick Guitars Sl60m Bwn Melody Maker",
+    "description": "Color: Brown Woodgrain Forma del cuerpo: SG - Style Número de cuerdas: 6 cuerdas Construcción mástil: Atornillado Número de trastes: 22 Longitud escala: 24,7...",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn-aL5hgBE92SJcHG5hcu55TWDj5BbcFeg-A&s",
+    "image_alt": "Guitarra Electrica Slick Guitars Sl60m Bwn Melody Maker",
+    "price": "243.300"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "3",
+    "title": "Guitarra Electrica Chapman Ghost Fret Lh Midnight Para Zurdo",
+    "description": "CHAPMAN GHOST FRET LH ZURDA Midnight Sky HEAD.Straight Guardian Headstock TUNERS Chapman Classic Closed (18:1 Gearing) STRING NUT 43mm Graph Tech Black TUSQ ...",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq-KRQxqwIXN_JuQZkU9fvaDfzQRXrWk1tKQ&s",
+    "image_alt": "Guitarra Electrica Chapman Ghost Fret Lh Midnight Para Zurdo",
+    "price": "450.800"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "4",
+    "title": "Guitarra Cort G250 Lh Bk Para Zurdo G Series",
+    "description": "G SERIES. CORT GUITARRA ELECTRICA DE 6 CUERDAS PARA ZURDOS G 250LH BK. Guitarra de diseño clásico con doble cutaway. Cuerpo de tilo. Mástil Bolt-on de arce c...",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRop42SB96WanJBdKQPrIMVViPDngNf_q_eiA&s",
+    "image_alt": "Guitarra Cort G250 Lh Bk Para Zurdo G Series",
+    "price": "550.800"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "5",
+    "title": "Guitarra Eléctrica Soloking Les Paul SLS60 QM Deluxe Black Aqua",
+    "description": "One Piece African Mahogany Neck - Neck Dimension : 21mm (1st Fret) and 22.5 mm (12th Fret) - Fretboard Width : 43mm (1st Fret) and 56mm (12th fret) - Ros...",
+    "image": "https://media.yoper.com.ar/argentina/products/49/3d41d656-6b58-4ad5-b2ab-99d514d85c26.png?v=1",
+    "image_alt": "Guitarra Eléctrica Soloking Les Paul SLS60 QM Deluxe Black Aqua",
+    "price": "580.500"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "6",
+    "title": "Guitarra Eléctrica Soloking Stratocaster MS1 Custom 22 HSS Pelham Blue",
+    "description": "Alder body with flat top and extended back cutaway and side natural binding - Modern D Quartersawn Neck Shape with Canadian Roasted Maple - Roasted Map...",
+    "image": "https://media.yoper.com.ar/argentina/products/49/04b9383020b-4cc6-b1b8-6b85336a3c66.jpg?v=1",
+    "image_alt": "Guitarra Eléctrica Soloking Stratocaster MS1 Custom 22 HSS Pelham Blue",
+    "price": "600.000"
+  },
+  {
+    "category_id": "1",
+    "category": "Guitarras",
+    "id": "7",
+    "title": "Guitarra Electrica Jet Guitars JS450 TBL Stratocaster HSS",
+    "description": "¡Bienvenido a JET Guitars! JET Guitars es una nueva marca de guitarras eléctricas creada para el disfrute de músicos de todos los niveles y habilidades. In...",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcrcFK37pKNVEqWRTJzmozOyBf9oViL3MlJg&s",
+    "image_alt": "Guitarra Electrica Jet Guitars JS450 TBL Stratocaster HSS",
+    "price": "610.000"
+  }
 ]
