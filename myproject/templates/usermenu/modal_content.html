@@ -1,11 +1,13 @@
 <div>
   <!-- Title and close button-->
-  <div class="flex justify-between items-center bg-black space-x-4 px-2 py-4">
-    <h2 class="font-subtitle-lg text-white">{{ product.title }}</h2>
-    <button class="btn bg-none rounded-full" onclick="closeModal()">
+  <div class="flex justify-between items-center bg-black space-x-8 px-4 py-4">
+    <h2 class="font-title-xl text-white">{{ product.title }}</h2>
+    <button
+      class="btn btn-lg bg-none rounded-full self-start"
+      onclick="closeModal()"
+    >
       <svg
-        width="22"
-        height="22"
+        class="w-auto h-12"
         viewBox="0 0 22 22"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -28,29 +30,30 @@
 
   <!-- All of the page content-->
   <div class="p-4">
-    <div class="flex flex-row border-b-2 border-dashed border-gray mb-4 pb-4">
+    <div
+      class="flex flex-row border-b-2 border-dashed border-gray-500 mb-4 pb-4"
+    >
       <p class="text-white p-2 bg-black rounded-full">{{ product.category }}</p>
     </div>
     <article class="rounded-lg border border-solid border-2 border-black mb-4">
       <p class="p-4 font-text-md">{{ product.description }}</p>
     </article>
     <div
-      class="flex justify-center items-center border-b-2 border-dashed border-gray mb-6 pb-6"
+      class="flex justify-center md:justify-start items-center border-b-2 border-dashed border-gray-500 mb-6 pb-6"
     >
       <img
         src="{{ product.image }}"
         alt="{{ product.image_alt }}"
-        class="w-full h-auto rounded-lg"
+        class="w-full md:max-w-[350px] h-auto rounded-lg"
       />
     </div>
     <div class="flex flex-row">
       <div class="w-1/2"><!-- Extras --></div>
-      <div class="w-1/2 flex flex-col justify-center items-start">
+      <div class="w-1/2 flex flex-col justify-end items-start space-y-4">
         <p class="font-title-xl">${{ product.price }}</p>
-        <div class="flex flex-row">
-          <button
-            class="cta-button p-4 rounded font-subtitle-lg text-white"
-          >
+        <div class="flex flex-row space-x-2">
+          <!-- Buttons row-->
+          <button class="rounded-cta-black-medium px-2">
             <svg
               width="20"
               height="20"
@@ -74,14 +77,17 @@
               />
             </svg>
           </button>
-          <button
-            class="cta-button p-4 rounded"
-          >
-            0
-          </button>
-          <button
-            class="cta-button px-4 rounded"
-          >
+          <input
+            type="number"
+            id="unit_numbers"
+            name="unit_numbers"
+            min="0"
+            max="100"
+            value="0"
+            placeholder="0"
+            class="p-2 w-12 border-2 border-solid border-black rounded-lg"
+          />
+          <button class="rounded-cta-black-medium px-2">
             <svg
               width="16"
               height="2"
@@ -99,7 +105,9 @@
             </svg>
           </button>
         </div>
-        <button>Agregar al carrito</button>
+        <button class="rounded-orange-cta-button p-2">
+          <p class="font-subtitle-lg">Agregar al carrito</p>
+        </button>
       </div>
     </div>
   </div>

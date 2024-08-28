@@ -14,7 +14,7 @@
     <script src="https://unpkg.com/htmx.org"></script>
 </head>
 <body class="bg-gray-100 max-w-screen-md">
-    <header class="container mx-auto">
+    <header>
         <nav>
             <ul class="flex flex-wrap items-center justify-between px-6 pt-4 sm:px-8">
                 <li>
@@ -58,7 +58,7 @@
         </nav>                
     </header>
 
-    <main class="container mx-auto mt-4">
+    <main class="mx-auto mt-4">
         <section id="categories">
             <div id="categories-content" hx-get="/usermenu/categories" hx-trigger="load" hx-target="#categories-content" hx-swap="innerHTML">
                 <!-- Categories will be loaded here -->

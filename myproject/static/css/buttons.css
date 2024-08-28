@@ -1,10 +1,26 @@
-.cta-button {
-    font-family: 'Work Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: -0.06em;
-    text-align: left;
-    margin: 0;
-    line-height: 0;
-    background-color: #ED8000;
+.rounded-orange-cta-button {
+  font-family: "Work Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  text-align: left;
+  margin: 0;
+  padding: 8px;
+  line-height: 0;
+  color: #ffffff;
+  background-color: #ed8000;
+  border-radius: 10px;
+}
+
+.rounded-cta-black-medium {
+  font-family: "Work Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.06em;
+  text-align: left;
+  margin: 0;
+  line-height: 0;
+  color: #000000;
+  background-color: #000000;
+  border-radius: 10px;
 }

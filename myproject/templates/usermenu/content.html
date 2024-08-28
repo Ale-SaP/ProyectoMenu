@@ -29,7 +29,7 @@
         <!-- Bottom Row: shopping cart button -->
         <div class="flex justify-end items-end mt-auto w-1/3 sm:w-1/5">
           <button
-            class="px-4 py-2 rounded cta-button"
+            class="rounded-orange-cta-button"
             hx-get="/usermenu/modal_content/{{ row.category_id }}-{{ row.id }}"
             hx-target="#modal-content"
             hx-trigger="click"
@@ -73,16 +73,16 @@
 <!-- Modal Background Overlay -->
 <div
   id="modal-overlay"
-  class="fixed inset-0 bg-black bg-opacity-75 hidden z-40"
+  class="fixed inset-0 max-w-screen-sm bg-black bg-opacity-75 hidden z-40"
 ></div>
 
 <!-- Modal -->
-<div id="modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
-  <div class="flex items-center justify-center min-h-screen md:min-h-lg md:min-w-lg">
+<div id="modal" class="rounded-lg fixed mx-auto my-auto inset-0 z-50 hidden overflow-y-auto max-w-screen-sm md:max-w-[600px] md:max-h-[500px]">
+  <div class="flex items-center justify-center">
     <!-- Modal content -->
     <div
       id="modal-content"
-      class="bg-white rounded-lg shadow-xl h-full"
+      class="bg-white shadow-xl h-full"
     >
       <!-- Modal content will be dynamically inserted here -->
     </div>
