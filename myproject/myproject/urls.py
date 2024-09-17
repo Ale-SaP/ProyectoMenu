@@ -17,16 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
-import os
-import json
 from django.conf import settings
+from usermenu.models import OrgConfigs
 
+# No debería estar llamando al index desde acá, hay que moverlo al usermenu. Acá una landing simple y fue
 def index(request):
-    json_file_path = os.path.join(settings.BASE_DIR, 'mock-data', 'configs.json') # Acá debería leer datos de la db
-    with open(json_file_path, 'r', encoding='utf-8') as file:
-        on_load_data = json.load(file)
-
-    return render(request, 'index.html', on_load_data)
+    configs = (OrgConfigs.objects.get(id_org = 1))
+    return render(request, 'index.html', {'configs': configs})
 
 urlpatterns = [
     path('admin/', admin.site.urls),
