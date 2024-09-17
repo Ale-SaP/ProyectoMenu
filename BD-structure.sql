@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `org_configs` (
   `id_org_configs` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_org` INT NOT NULL,
   `nombre_tienda` VARCHAR(255),
-  `contenido_inicial` VARCHAR(255),
+  `contenido_inicial` INT,
   `logo_url` VARCHAR(255),
   `descripcion_logo` VARCHAR(255),
   `texto_superior` VARCHAR(255),
@@ -45,7 +45,10 @@ CREATE TABLE IF NOT EXISTS `product` (
   `name` VARCHAR(100) NOT NULL,
   `description` VARCHAR(255),
   `price` DECIMAL(10,2) NOT NULL,
-  `status` BOOLEAN DEFAULT TRUE
+  `status` BOOLEAN DEFAULT true,
+  `image_link` VARCHAR(255),
+  `image_link_alt` VARCHAR(255),
+  ALTER TABLE `product`
 );
 
 CREATE TABLE IF NOT EXISTS `category` (

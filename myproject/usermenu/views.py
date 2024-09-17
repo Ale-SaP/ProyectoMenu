@@ -10,7 +10,7 @@ def categories(request):
     return render(request, 'usermenu/categories.html', {'categories': categories})
 
 def content(request, category):
-    products = Product.objects.filter(categories__name=category)
+    products = Product.objects.filter(productcategory__id_category=category)
 
     return render(request, 'usermenu/content.html', {'rows': products})
 
