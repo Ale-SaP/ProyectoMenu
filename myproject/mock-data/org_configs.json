@@ -1,0 +1,12 @@
+[
+    {
+        "id_org": 1,
+        "nombre_tienda": "Kairon Instrumentos",
+        "contenido_inicial": "Guitarras",
+        "logo_url": "https://example.com/logo1.webp",
+        "descripcion_logo": "Store logo",
+        "texto_superior": "Tienda",
+        "horario_atencion": "Abierto hasta las 23:30",
+        "telefono_contacto": "+3764 123123"
+    }
+]
