@@ -158,7 +158,7 @@ class OrgConfigs(models.Model):
     id_org_configs = models.AutoField(primary_key=True)
     id_org = models.ForeignKey('Organization', models.DO_NOTHING, db_column='id_org')
     nombre_tienda = models.CharField(max_length=255, blank=True, null=True)
-    contenido_inicial = models.CharField(max_length=255, blank=True, null=True)
+    contenido_inicial = models.IntegerField(blank=True, null=True)
     logo_url = models.CharField(max_length=255, blank=True, null=True)
     descripcion_logo = models.CharField(max_length=255, blank=True, null=True)
     texto_superior = models.CharField(max_length=255, blank=True, null=True)
@@ -188,6 +188,8 @@ class Product(models.Model):
     description = models.CharField(max_length=255, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.IntegerField(blank=True, null=True)
+    image_link_alt = models.CharField(max_length=255, blank=True, null=True)
+    image_link = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
