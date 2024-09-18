@@ -1,7 +1,7 @@
 <div>
   <!-- Title and close button-->
   <div class="flex justify-between items-center bg-black space-x-8 px-4 py-4">
-    <h2 class="font-title-xl text-white">{{ product.title }}</h2>
+    <h2 class="font-title-xl text-white">{{ product.name }}</h2>
     <button
       class="btn btn-lg bg-none rounded-full self-start"
       onclick="closeModal()"
@@ -30,11 +30,13 @@
 
   <!-- All of the page content-->
   <div class="p-4">
-    <div
-      class="flex flex-row border-b-2 border-dashed border-gray-500 mb-4 pb-4"
-    >
-      <p class="text-white p-2 bg-black rounded-full">{{ product.category }}</p>
-    </div>
+    {% for category in categories %}
+      <div
+        class="flex flex-row border-b-2 border-dashed border-gray-500 mb-4 pb-4"
+      >
+        <p class="text-white p-2 bg-black rounded-full">{{ category }}</p>
+      </div>
+    {% endfor %}
     <article class="rounded-lg border border-solid border-2 border-black mb-4">
       <p class="p-4 font-text-md">{{ product.description }}</p>
     </article>
@@ -112,15 +114,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  function closeModal() {
-    document.getElementById("modal").classList.add("hidden");
-    document.getElementById("modal-overlay").classList.add("hidden");
-  }
-
-  document.addEventListener("htmx:afterRequest", function () {
-    document.getElementById("modal").classList.remove("hidden");
-    document.getElementById("modal-overlay").classList.remove("hidden");
-  });
-</script>

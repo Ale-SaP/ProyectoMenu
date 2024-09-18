@@ -34,7 +34,6 @@
             hx-target="#modal-content"
             hx-trigger="click"
             hx-swap="innerHTML"
-            hx-on="htmx:afterRequest: document.getElementById('modal').classList.remove('hidden')"
           >
             <svg
               width="20"
@@ -70,21 +69,56 @@
   {% endfor %}
 </ul>
 
-<!-- Modal Background Overlay -->
-<div
-  id="modal-overlay"
-  class="fixed inset-0 max-w-screen-sm bg-black bg-opacity-75 hidden z-40"
-></div>
-
 <!-- Modal -->
-<div id="modal" class="rounded-lg fixed mx-auto my-auto inset-0 z-50 hidden overflow-y-auto max-w-screen-sm md:max-w-[600px] md:max-h-[500px]">
-  <div class="flex items-center justify-center">
-    <!-- Modal content -->
-    <div
-      id="modal-content"
-      class="bg-white shadow-xl h-full"
-    >
-      <!-- Modal content will be dynamically inserted here -->
-    </div>
+<div
+  id="modal"
+  class="fixed inset-0 z-50 hidden overflow-y-auto flex items-center justify-center bg-black bg-opacity-75"
+>
+  <div
+    id="modal-content"
+    class="bg-white shadow-xl rounded-lg max-w-screen-sm md:w-[600px] md:max-h-[500px] relative"
+  >
+    <!-- Modal content will be dynamically inserted here -->
   </div>
 </div>
+
+<!-- JavaScript -->
+<script>
+  function closeModal() {
+    document.getElementById("modal").classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+
+    // Remove event listeners when modal is closed
+    document.removeEventListener("keydown", handleEscapeKey);
+    document
+      .getElementById("modal")
+      .removeEventListener("click", handleOverlayClick);
+  }
+
+  function handleEscapeKey(event) {
+    if (event.key === "Escape" || event.key === "Esc") {
+      closeModal();
+    }
+  }
+
+  function handleOverlayClick(event) {
+    // Check if the click was outside the modal content
+    if (event.target === document.getElementById("modal")) {
+      closeModal();
+    }
+  }
+
+  document.addEventListener("htmx:afterSwap", function (event) {
+    if (event.detail.target && event.detail.target.id === "modal-content") {
+      // Modal content has been swapped in
+      document.getElementById("modal").classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+
+      // Add event listeners when modal is opened
+      document.addEventListener("keydown", handleEscapeKey);
+      document
+        .getElementById("modal")
+        .addEventListener("click", handleOverlayClick);
+    }
+  });
+</script>

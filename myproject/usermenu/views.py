@@ -1,6 +1,6 @@
 import os
 import json
-from django.shortcuts import render, HttpResponse, Http404
+from django.shortcuts import render, HttpResponse, Http404, get_object_or_404
 
 
 from usermenu.models import Product, OrgConfigs, Category
@@ -16,15 +16,19 @@ def content(request, category):
 
 def modal_content(request, product_id):
     try:
-        category_id, prod_id = product_id.split('-')
-        
-        getProduct = Product.objects.get(product_id = prod_id)
-        
-        if not getProduct:
-            raise Http404("Category not found")
-        
-        return render(request, 'usermenu/modal_content.html', {'product': getProduct})
+        getProduct = get_object_or_404(Product, id_product=product_id)
+        getCategories = Category.objects.filter(productcategory__id_product=product_id)
+        getCategoryNames = getCategories.values_list('name', flat=True)
 
-    except (ValueError, FileNotFoundError, json.JSONDecodeError) as e:
+        return render(request, 'usermenu/modal_content.html', {
+            'product': getProduct,
+            'categories': getCategoryNames
+        })
+    
+    except Product.DoesNotExist:
+        raise Http404("Product not found")
+    except Category.DoesNotExist:
+        raise Http404("Category not found")
+    except Exception as e:
         print(f"Error: {e}")
         raise Http404("Invalid product or category")
