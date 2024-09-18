@@ -55,7 +55,36 @@
         <p class="font-title-xl">${{ product.price }}</p>
         <div class="flex flex-row space-x-2">
           <!-- Buttons row-->
-          <button class="rounded-cta-black-medium px-2">
+          <button id="decrement-button" class="rounded-cta-black-medium px-2">
+            <!-- Minus icon SVG -->
+            <svg
+              width="16"
+              height="2"
+              viewBox="0 0 16 2"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.33337 1H14.6667"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+          <input
+            type="number"
+            id="unit_numbers"
+            name="unit_numbers"
+            min="0"
+            max="100"
+            value="0"
+            placeholder="0"
+            class="p-2 w-16 border-2 border-solid border-black rounded-lg text-center"
+          />
+          <button id="increment-button" class="rounded-cta-black-medium px-2">
+            <!-- Plus icon SVG -->
             <svg
               width="20"
               height="20"
@@ -72,33 +101,6 @@
               />
               <path
                 d="M3.33337 10H16.6667"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-          <input
-            type="number"
-            id="unit_numbers"
-            name="unit_numbers"
-            min="0"
-            max="100"
-            value="0"
-            placeholder="0"
-            class="p-2 w-12 border-2 border-solid border-black rounded-lg"
-          />
-          <button class="rounded-cta-black-medium px-2">
-            <svg
-              width="16"
-              height="2"
-              viewBox="0 0 16 2"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M1.33337 1H14.6667"
                 stroke="white"
                 stroke-width="1.5"
                 stroke-linecap="round"
