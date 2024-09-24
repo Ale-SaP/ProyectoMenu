@@ -4,7 +4,7 @@
     <!-- Left: image -->
     <div class="flex w-1/4 justify-center items-center">
       <img
-        src="{{ row.image }}"
+        src="{{ row.image_link }}"
         alt="{{ row.image_alt }}"
         class="h-24 w-24 rounded-lg"
       />
@@ -77,7 +77,7 @@
 >
   <div
     id="modal-content"
-    class="bg-white shadow-xl rounded-lg max-w-screen-sm md:w-[600px] md:max-h-[500px] relative"
+    class="bg-white shadow-xl rounded-lg max-w-screen-sm h-screen md:w-[600px] md:max-h-[700px] relative overflow-y-auto"
   >
     <!-- Modal content will be dynamically inserted here -->
   </div>
