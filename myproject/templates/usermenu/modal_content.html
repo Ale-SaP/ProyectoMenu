@@ -31,11 +31,11 @@
   <!-- All of the page content-->
   <div class="p-4">
     {% for category in categories %}
-      <div
-        class="flex flex-row border-b-2 border-dashed border-gray-500 mb-4 pb-4"
-      >
-        <p class="text-white p-2 bg-black rounded-full">{{ category }}</p>
-      </div>
+    <div
+      class="flex flex-row border-b-2 border-dashed border-gray-500 mb-4 pb-4"
+    >
+      <p class="text-white p-2 bg-black rounded-full">{{ category }}</p>
+    </div>
     {% endfor %}
     <article class="rounded-lg border border-solid border-2 border-black mb-4">
       <p class="p-4 font-text-md">{{ product.description }}</p>
@@ -77,10 +77,10 @@
             type="number"
             id="unit_numbers"
             name="unit_numbers"
-            min="0"
+            min="1"
             max="100"
-            value="0"
-            placeholder="0"
+            value="1"
+            placeholder="1"
             class="p-2 w-16 border-2 border-solid border-black rounded-lg text-center"
           />
           <button id="increment-button" class="rounded-cta-black-medium px-2">
@@ -109,7 +109,14 @@
             </svg>
           </button>
         </div>
-        <button class="rounded-orange-cta-button p-2">
+        <button
+          class="rounded-orange-cta-button p-2"
+          id="add-to-cart-button"
+          data-product-id="{{ product.id }}"
+          data-product-name="{{ product.name }}"
+          data-product-price="{{ product.price }}"
+          onclick="closeModal()"
+        >
           <p class="font-subtitle-lg">Agregar al carrito</p>
         </button>
       </div>
