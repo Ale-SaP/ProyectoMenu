@@ -32,3 +32,6 @@ def modal_content(request, product_id):
     except Exception as e:
         print(f"Error: {e}")
         raise Http404("Invalid product or category")
+
+def shopping_cart(request):
+    return render(request, 'usermenu/shopping_cart.html')

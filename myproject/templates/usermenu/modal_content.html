@@ -1,6 +1,7 @@
 <div>
   <!-- Title and close button-->
-  <div class="flex justify-between items-center bg-black space-x-8 px-4 py-4">
+   <div class="sticky top-0">
+  <div class="flex justify-between items-center bg-black space-x-8 px-4 pt-8 pb-4 sm:py-4">
     <h2 class="font-title-xl text-white">{{ product.name }}</h2>
     <button
       class="btn btn-lg bg-none rounded-full self-start"
@@ -27,6 +28,7 @@
       </svg>
     </button>
   </div>
+  </div>
 
   <!-- All of the page content-->
   <div class="p-4">
@@ -41,15 +43,15 @@
       <p class="p-4 font-text-md">{{ product.description }}</p>
     </article>
     <div
-      class="flex justify-center md:justify-start items-center border-b-2 border-dashed border-gray-500 mb-6 pb-6"
+      class="flex justify-center md:justify-start items-center mb-6 pb-6"
     >
       <img
         src="{{ product.image_link }}"
         alt="{{ product.image_alt }}"
-        class="w-full md:max-w-[350px] h-auto rounded-lg"
+        class="w-full max-w-[200px] md:max-w-[350px] h-auto rounded-lg"
       />
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row sticky bottom-12 border-t-2 bg-white bg-opacity-75 border-dashed border-gray-500" >
       <div class="w-1/2"><!-- Extras --></div>
       <div class="w-1/2 flex flex-col justify-end items-start space-y-4">
         <p class="font-title-xl">${{ product.price }}</p>
