@@ -1,0 +1,3 @@
+Django==5.1  # You might adjust this to the exact version you're using.
+mysqlclient  # Required for the MySQL database.
+whitenoise  # Required for static file serving.
