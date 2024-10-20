@@ -1,33 +1,35 @@
 <div>
   <!-- Title and close button-->
-   <div class="sticky top-0">
-  <div class="flex justify-between items-center bg-black space-x-8 px-4 pt-8 pb-4 sm:py-4">
-    <h2 class="font-title-xl text-white">{{ product.name }}</h2>
-    <button
-      class="btn btn-lg bg-none rounded-full self-start"
-      onclick="closeModal()"
+  <div class="sticky top-0">
+    <div
+      class="flex justify-between items-center bg-black space-x-8 px-4 pt-8 pb-4 sm:py-4"
     >
-      <svg
-        class="w-auto h-12"
-        viewBox="0 0 22 22"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
+      <h2 class="font-title-xl text-white">{{ product.name }}</h2>
+      <button
+        class="btn btn-lg bg-none rounded-full self-start"
+        onclick="closeModal()"
       >
-        <path
-          d="M13.9993 14.0002L7.99994 8.00021M8.00058 14.0002L13.9999 8.00021"
-          stroke="white"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
-        <path
-          d="M21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21C16.5228 21 21 16.5228 21 11Z"
-          stroke="white"
-          stroke-width="1.5"
-        />
-      </svg>
-    </button>
-  </div>
+        <svg
+          class="w-auto h-12"
+          viewBox="0 0 22 22"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M13.9993 14.0002L7.99994 8.00021M8.00058 14.0002L13.9999 8.00021"
+            stroke="white"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M21 11C21 5.47715 16.5228 1 11 1C5.47715 1 1 5.47715 1 11C1 16.5228 5.47715 21 11 21C16.5228 21 21 16.5228 21 11Z"
+            stroke="white"
+            stroke-width="1.5"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 
   <!-- All of the page content-->
@@ -42,16 +44,16 @@
     <article class="rounded-lg border border-solid border-2 border-black mb-4">
       <p class="p-4 font-text-md">{{ product.description }}</p>
     </article>
-    <div
-      class="flex justify-center md:justify-start items-center mb-6 pb-6"
-    >
+    <div class="flex justify-center md:justify-start items-center mb-6 pb-6">
       <img
         src="{{ product.image_link }}"
         alt="{{ product.image_alt }}"
         class="w-full max-w-[200px] md:max-w-[350px] h-auto rounded-lg"
       />
     </div>
-    <div class="flex flex-row sticky bottom-12 border-t-2 bg-white bg-opacity-75 border-dashed border-gray-500" >
+    <div
+      class="flex flex-row sticky bottom-12 border-t-2 bg-white bg-opacity-75 border-dashed border-gray-500"
+    >
       <div class="w-1/2"><!-- Extras --></div>
       <div class="w-1/2 flex flex-col justify-end items-start space-y-4">
         <p class="font-title-xl">${{ product.price }}</p>
