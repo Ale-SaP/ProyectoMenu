@@ -17,74 +17,92 @@ from usermenu.models import (
     SectorCategory,
 )
 
+
+"""python manage.py import_json
+    --organization ./mock-data/organization.json
+    --org_config ./mock-data/org_config.json
+    --catalog ./mock-data/catalog.json
+    --category ./mock-data/category.json
+    --product ./mock-data/product.json
+    --sector ./mock-data/sector.json
+    --sector_category ./mock-data/sector_category.json
+    --product_category ./mock-data/product_category.json
+    --payment_method ./mock-data/payment_method.json
+
+    --payment_status ./mock-data/payment_status.json
+    --receipt ./mock-data/receipt.json
+    --client ./mock-data/client.json
+    --order ./mock-data/order.json
+    --detail ./mock-data/detail.json
+"""
+
 class Command(BaseCommand):
     help = 'Import data from JSON files into the database'
 
     def add_arguments(self, parser):
-        parser.add_argument('--organizations', type=str, help='Path to organizations JSON file')
-        parser.add_argument('--org_configs', type=str, help='Path to org_configs JSON file')
-        parser.add_argument('--catalogs', type=str, help='Path to catalogs JSON file')
-        parser.add_argument('--categories', type=str, help='Path to categories JSON file')
-        parser.add_argument('--products', type=str, help='Path to products JSON file')
-        parser.add_argument('--product_categories', type=str, help='Path to product_categories JSON file')
-        parser.add_argument('--clients', type=str, help='Path to clients JSON file')
-        parser.add_argument('--orders', type=str, help='Path to orders JSON file')
-        parser.add_argument('--details', type=str, help='Path to details JSON file')
-        parser.add_argument('--payment_methods', type=str, help='Path to payment_methods JSON file')
-        parser.add_argument('--payment_statuses', type=str, help='Path to payment_statuses JSON file')
-        parser.add_argument('--receipts', type=str, help='Path to receipts JSON file')
-        parser.add_argument('--sectors', type=str, help='Path to sectors JSON file')
-        parser.add_argument('--sector_categories', type=str, help='Path to sector_categories JSON file')
+        parser.add_argument('--organization', type=str, help='Path to organization JSON file')
+        parser.add_argument('--org_config', type=str, help='Path to org_config JSON file')
+        parser.add_argument('--catalog', type=str, help='Path to catalog JSON file')
+        parser.add_argument('--category', type=str, help='Path to category JSON file')
+        parser.add_argument('--product', type=str, help='Path to product JSON file')
+        parser.add_argument('--product_category', type=str, help='Path to product_category JSON file')
+        parser.add_argument('--client', type=str, help='Path to client JSON file')
+        parser.add_argument('--order', type=str, help='Path to order JSON file')
+        parser.add_argument('--detail', type=str, help='Path to detail JSON file')
+        parser.add_argument('--payment_method', type=str, help='Path to payment_method JSON file')
+        parser.add_argument('--payment_status', type=str, help='Path to payment_status JSON file')
+        parser.add_argument('--receipt', type=str, help='Path to receipt JSON file')
+        parser.add_argument('--sector', type=str, help='Path to sector JSON file')
+        parser.add_argument('--sector_category', type=str, help='Path to sector_category JSON file')
 
     def handle(self, *args, **kwargs):
-        if kwargs['organizations']:
-            self.import_organizations(kwargs['organizations'])
+        if kwargs['organization']:
+            self.import_organization(kwargs['organization'])
 
-        if kwargs['org_configs']:
-            self.import_org_configs(kwargs['org_configs'])
+        if kwargs['org_config']:
+            self.import_org_config(kwargs['org_config'])
 
-        if kwargs['catalogs']:
-            self.import_catalogs(kwargs['catalogs'])
+        if kwargs['catalog']:
+            self.import_catalog(kwargs['catalog'])
 
-        if kwargs['categories']:
-            self.import_categories(kwargs['categories'])
+        if kwargs['category']:
+            self.import_category(kwargs['category'])
 
-        if kwargs['products']:
-            self.import_products(kwargs['products'])
+        if kwargs['product']:
+            self.import_product(kwargs['product'])
 
-        if kwargs['product_categories']:
-            self.import_product_categories(kwargs['product_categories'])
+        if kwargs['product_category']:
+            self.import_product_category(kwargs['product_category'])
 
-        if kwargs['clients']:
-            self.import_clients(kwargs['clients'])
+        if kwargs['client']:
+            self.import_client(kwargs['client'])
 
-        if kwargs['orders']:
-            self.import_orders(kwargs['orders'])
+        if kwargs['order']:
+            self.import_order(kwargs['order'])
 
-        if kwargs['details']:
-            self.import_details(kwargs['details'])
+        if kwargs['detail']:
+            self.import_detail(kwargs['detail'])
 
-        if kwargs['payment_methods']:
-            self.import_payment_methods(kwargs['payment_methods'])
+        if kwargs['payment_method']:
+            self.import_payment_method(kwargs['payment_method'])
 
-        if kwargs['payment_statuses']:
-            self.import_payment_statuses(kwargs['payment_statuses'])
+        if kwargs['payment_status']:
+            self.import_payment_status(kwargs['payment_status'])
 
-        if kwargs['receipts']:
-            self.import_receipts(kwargs['receipts'])
+        if kwargs['receipt']:
+            self.import_receipt(kwargs['receipt'])
 
-        if kwargs['sectors']:
-            self.import_sectors(kwargs['sectors'])
+        if kwargs['sector']:
+            self.import_sector(kwargs['sector'])
 
-        if kwargs['sector_categories']:
-            self.import_sector_categories(kwargs['sector_categories'])
+        if kwargs['sector_category']:
+            self.import_sector_category(kwargs['sector_category'])
 
-    def import_organizations(self, file_path):
+    def import_organization(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            organizations = json.load(f)
-            for data in organizations:
+            organization = json.load(f)
+            for data in organization:
                 org, created = Organization.objects.get_or_create(
-                    uuid=data['uuid'],
                     defaults={
                         'name': data['name']
                     }
@@ -94,11 +112,11 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Organization already exists: {org.name}"))
 
-    def import_org_configs(self, file_path):
+    def import_org_config(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             configs = json.load(f)
             for data in configs:
-                org = Organization.objects.get(uuid=data['organization_uuid'])
+                org = Organization.objects.get(id_organization=data['id_organization'])
                 config, created = OrgConfig.objects.get_or_create(
                     id_organization=org,
                     defaults={
@@ -117,13 +135,12 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"OrgConfig already exists for: {org.name}"))
 
-    def import_catalogs(self, file_path):
+    def import_catalog(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            catalogs = json.load(f)
-            for data in catalogs:
-                org = Organization.objects.get(uuid=data['organization_uuid'])
+            catalog = json.load(f)
+            for data in catalog:
+                org = Organization.objects.get(id_organization=data['id_organization'])
                 catalog, created = Catalog.objects.get_or_create(
-                    uuid=data['uuid'],
                     defaults={
                         'name': data['name'],
                         'status': data.get('status'),
@@ -136,14 +153,13 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Catalog already exists: {catalog.name}"))
 
-    def import_categories(self, file_path):
+    def import_category(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            categories = json.load(f)
-            for data in categories:
+            category = json.load(f)
+            for data in category:
                 category, created = Category.objects.get_or_create(
-                    uuid=data['uuid'],
+                    name=data['name'],
                     defaults={
-                        'name': data['name'],
                         'creation_date': data.get('creation_date'),
                     }
                 )
@@ -152,15 +168,14 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Category already exists: {category.name}"))
 
-    def import_products(self, file_path):
+    def import_product(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            products = json.load(f)
-            for data in products:
-                catalog = Catalog.objects.get(uuid=data['catalog_uuid'])
+            product = json.load(f)
+            for data in product:
+                catalog = Catalog.objects.get(id_catalog=data['id_catalog'])
                 product, created = Product.objects.get_or_create(
-                    uuid=data['uuid'],
+                    name=data['name'],
                     defaults={
-                        'name': data['name'],
                         'description': data.get('description'),
                         'price': data.get('price'),
                         'status': data.get('status'),
@@ -175,12 +190,12 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Product already exists: {product.name}"))
 
-    def import_product_categories(self, file_path):
+    def import_product_category(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             relations = json.load(f)
             for data in relations:
-                product = Product.objects.get(uuid=data['product_uuid'])
-                category = Category.objects.get(uuid=data['category_uuid'])
+                product = Product.objects.get(id_product=data['id_product'])
+                category = Category.objects.get(id_category=data['id_category'])
                 pc, created = ProductCategory.objects.get_or_create(
                     id_product=product,
                     id_category=category,
@@ -195,14 +210,13 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.WARNING(
                         f"Product '{product.name}' already linked with Category '{category.name}'"))
 
-    def import_clients(self, file_path):
+    def import_client(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            clients = json.load(f)
-            for data in clients:
+            client = json.load(f)
+            for data in client:
                 client, created = Client.objects.get_or_create(
-                    uuid=data['uuid'],
+                    name=data['name'],
                     defaults={
-                        'name': data['name'],
                         'creation_date': data.get('creation_date'),
                     }
                 )
@@ -211,13 +225,13 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Client already exists: {client.name}"))
 
-    def import_orders(self, file_path):
+    def import_order(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            orders = json.load(f)
-            for data in orders:
-                client = Client.objects.get(uuid=data['client_uuid'])
+            order = json.load(f)
+            for data in order:
+                client = Client.objects.get(id_client=data['id_client'])
                 order, created = Order.objects.get_or_create(
-                    uuid=data['uuid'],
+                    id_order=data["id_order"],
                     defaults={
                         'order_date': data['order_date'],
                         'creation_date': data.get('creation_date'),
@@ -229,12 +243,12 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Order already exists: {order.uuid}"))
 
-    def import_details(self, file_path):
+    def import_detail(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            details = json.load(f)
-            for data in details:
-                order = Order.objects.get(uuid=data['order_uuid'])
-                product = Product.objects.get(uuid=data['product_uuid'])
+            detail = json.load(f)
+            for data in detail:
+                order = Order.objects.get(id_order=data['id_order'])
+                product = Product.objects.get(id_product=data['id_product'])
                 detail, created = Detail.objects.get_or_create(
                     id_order=order,
                     id_product=product,
@@ -250,7 +264,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.WARNING(
                         f"Detail already exists for Order '{order.uuid}' and Product '{product.name}'"))
 
-    def import_payment_methods(self, file_path):
+    def import_payment_method(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             methods = json.load(f)
             for data in methods:
@@ -265,7 +279,7 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"PaymentMethod already exists: {method.method_name}"))
 
-    def import_payment_statuses(self, file_path):
+    def import_payment_status(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             statuses = json.load(f)
             for data in statuses:
@@ -280,15 +294,14 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"PaymentStatus already exists: {status.status_name}"))
 
-    def import_receipts(self, file_path):
+    def import_receipt(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            receipts = json.load(f)
-            for data in receipts:
-                order = Order.objects.get(uuid=data['order_uuid'])
+            receipt = json.load(f)
+            for data in receipt:
+                order = Order.objects.get(id_order=data['id_order'])
                 payment_method = PaymentMethod.objects.get(method_name=data['payment_method_name'])
                 payment_status = PaymentStatus.objects.get(status_name=data['payment_status_name'])
                 receipt, created = Receipt.objects.get_or_create(
-                    uuid=data['uuid'],
                     defaults={
                         'receipt_date': data['receipt_date'],
                         'creation_date': data.get('creation_date'),
@@ -302,11 +315,11 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Receipt already exists: {receipt.uuid}"))
 
-    def import_sectors(self, file_path):
+    def import_sector(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
-            sectors = json.load(f)
-            for data in sectors:
-                org = Organization.objects.get(uuid=data['organization_uuid'])
+            sector = json.load(f)
+            for data in sector:
+                org = Organization.objects.get(id_organization=data['id_organization'])
                 sector, created = Sector.objects.get_or_create(
                     name=data['name'],
                     id_organization=org,
@@ -319,12 +332,12 @@ class Command(BaseCommand):
                 else:
                     self.stdout.write(self.style.WARNING(f"Sector already exists: {sector.name}"))
 
-    def import_sector_categories(self, file_path):
+    def import_sector_category(self, file_path):
         with open(file_path, 'r', encoding='utf-8') as f:
             relations = json.load(f)
             for data in relations:
-                sector = Sector.objects.get(name=data['sector_name'])
-                category = Category.objects.get(uuid=data['category_uuid'])
+                sector = Sector.objects.get(id_sector=data['id_sector'])
+                category = Category.objects.get(id_category=data['id_category'])
                 sc, created = SectorCategory.objects.get_or_create(
                     id_sector=sector,
                     id_category=category,

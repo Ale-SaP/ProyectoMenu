@@ -1,8 +1,8 @@
 [
     {
-        "id_org": 1,
+        "id_organization": 1,
         "nombre_tienda": "Kairon Instrumentos",
-        "contenido_inicial": "Guitarras",
+        "contenido_inicial": 1,
         "logo_url": "https://acdn.mitiendanube.com/stores/969/083/themes/common/logo-402286790-1682352763-cb07c50b52b5915204ce03a6947093d41682352763-320-0.webp",
         "descripcion_logo": "Store logo",
         "texto_superior": "Tienda",

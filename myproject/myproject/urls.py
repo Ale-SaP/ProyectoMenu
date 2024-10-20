@@ -22,7 +22,7 @@ from usermenu.models import OrgConfig
 from django.conf.urls.static import static
 # No debería estar llamando al index desde acá, hay que moverlo al usermenu. Acá una landing simple y fue
 def index(request):
-    configs = (OrgConfig.objects.get(id_org = 1))
+    configs = (OrgConfig.objects.get(id_organization = 1))
     return render(request, 'index.html', {'configs': configs})
 
 urlpatterns = [

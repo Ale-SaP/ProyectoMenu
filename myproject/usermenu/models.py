@@ -6,11 +6,11 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+import uuid
 
 class Catalog(models.Model):
     id_catalog = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     status = models.IntegerField(blank=True, null=True)
     creation_date = models.DateTimeField(blank=True, null=True)
@@ -23,7 +23,7 @@ class Catalog(models.Model):
 
 class Category(models.Model):
     id_category = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     creation_date = models.DateTimeField(blank=True, null=True)
 
@@ -34,7 +34,7 @@ class Category(models.Model):
 
 class Client(models.Model):
     id_client = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     creation_date = models.DateTimeField(blank=True, null=True)
 
@@ -57,7 +57,7 @@ class Detail(models.Model):
 
 class Order(models.Model):
     id_order = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     order_date = models.DateField()
     creation_date = models.DateTimeField(blank=True, null=True)
     id_client = models.ForeignKey(Client, models.DO_NOTHING, db_column='id_client', blank=True, null=True)
@@ -86,7 +86,7 @@ class OrgConfig(models.Model):
 
 class Organization(models.Model):
     id_organization = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
 
     class Meta:
@@ -116,7 +116,7 @@ class PaymentStatus(models.Model):
 
 class Product(models.Model):
     id_product = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     description = models.CharField(max_length=255, blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -144,7 +144,7 @@ class ProductCategory(models.Model):
 
 class Receipt(models.Model):
     id_receipt = models.AutoField(primary_key=True)
-    uuid = models.CharField(max_length=36)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     receipt_date = models.DateField()
     creation_date = models.DateTimeField(blank=True, null=True)
     id_order = models.ForeignKey(Order, models.DO_NOTHING, db_column='id_order', blank=True, null=True)

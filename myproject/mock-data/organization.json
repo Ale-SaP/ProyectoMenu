@@ -2,8 +2,6 @@
 [
     {
     "name": "Kairon Instrumentos",
-    "location": "Calle Falsa 123",
-    "status": true,
-    "attendant": "Juan Pérez"
+    "status": true
     }
 ]

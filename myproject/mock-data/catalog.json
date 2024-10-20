@@ -3,6 +3,6 @@
         "name": "Listado principal",
         "creation_date": "2024-01-01",
         "status": true,
-        "id_org": 1
+        "id_organization": 1
     }
 ]
