@@ -8,155 +8,67 @@
 from django.db import models
 
 
-class AuthGroup(models.Model):
-    name = models.CharField(unique=True, max_length=150)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group'
-
-
-class AuthGroupPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_group_permissions'
-        unique_together = (('group', 'permission'),)
-
-
-class AuthPermission(models.Model):
+class Catalog(models.Model):
+    id_catalog = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
     name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
+    status = models.IntegerField(blank=True, null=True)
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='id_organization', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
-
-
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user'
-
-
-class AuthUserGroups(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
-
-
-class AuthUserUserPermissions(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
+        db_table = 'catalog'
 
 
 class Category(models.Model):
     id_category = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
     name = models.CharField(max_length=255)
-    svg_path = models.CharField(max_length=255, blank=True, null=True)
+    creation_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'category'
 
 
-class DjangoAdminLog(models.Model):
-    action_time = models.DateTimeField()
-    object_id = models.TextField(blank=True, null=True)
-    object_repr = models.CharField(max_length=200)
-    action_flag = models.PositiveSmallIntegerField()
-    change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
-
-
-class DjangoContentType(models.Model):
-    app_label = models.CharField(max_length=100)
-    model = models.CharField(max_length=100)
-
-    class Meta:
-        managed = False
-        db_table = 'django_content_type'
-        unique_together = (('app_label', 'model'),)
-
-
-class DjangoMigrations(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    app = models.CharField(max_length=255)
+class Client(models.Model):
+    id_client = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
     name = models.CharField(max_length=255)
-    applied = models.DateTimeField()
+    creation_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'django_migrations'
+        db_table = 'client'
 
 
-class DjangoSession(models.Model):
-    session_key = models.CharField(primary_key=True, max_length=40)
-    session_data = models.TextField()
-    expire_date = models.DateTimeField()
-
-    class Meta:
-        managed = False
-        db_table = 'django_session'
-
-
-class Menu(models.Model):
-    id_menu = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100, blank=True, null=True)
-    creation_date = models.DateField(blank=True, null=True)
-    status = models.IntegerField(blank=True, null=True)
-    id_org = models.ForeignKey('Organization', models.DO_NOTHING, db_column='id_org')
+class Detail(models.Model):
+    id_detail = models.AutoField(primary_key=True)
+    quantity = models.IntegerField()
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_order = models.ForeignKey('Order', models.DO_NOTHING, db_column='id_order', blank=True, null=True)
+    id_product = models.ForeignKey('Product', models.DO_NOTHING, db_column='id_product', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'menu'
+        db_table = 'detail'
 
 
-class MenuProduct(models.Model):
-    id_menu = models.OneToOneField(Menu, models.DO_NOTHING, db_column='id_menu', primary_key=True)  # The composite primary key (id_menu, id_product) found, that is not supported. The first column is selected.
-    id_product = models.ForeignKey('Product', models.DO_NOTHING, db_column='id_product')
+class Order(models.Model):
+    id_order = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
+    order_date = models.DateField()
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_client = models.ForeignKey(Client, models.DO_NOTHING, db_column='id_client', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'menu_product'
-        unique_together = (('id_menu', 'id_product'),)
+        db_table = 'order'
 
 
-class OrgConfigs(models.Model):
-    id_org_configs = models.AutoField(primary_key=True)
-    id_org = models.ForeignKey('Organization', models.DO_NOTHING, db_column='id_org')
+class OrgConfig(models.Model):
+    id_org_config = models.AutoField(primary_key=True)
     nombre_tienda = models.CharField(max_length=255, blank=True, null=True)
     contenido_inicial = models.IntegerField(blank=True, null=True)
     logo_url = models.CharField(max_length=255, blank=True, null=True)
@@ -164,32 +76,55 @@ class OrgConfigs(models.Model):
     texto_superior = models.CharField(max_length=255, blank=True, null=True)
     horario_atencion = models.CharField(max_length=255, blank=True, null=True)
     telefono_contacto = models.CharField(max_length=50, blank=True, null=True)
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_organization = models.ForeignKey('Organization', models.DO_NOTHING, db_column='id_organization', blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'org_configs'
+        db_table = 'org_config'
 
 
 class Organization(models.Model):
-    id_org = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=255)
-    status = models.IntegerField()
-    attendant = models.CharField(max_length=255, blank=True, null=True)
+    id_organization = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
+    name = models.CharField(max_length=255)
 
     class Meta:
         managed = False
         db_table = 'organization'
 
 
+class PaymentMethod(models.Model):
+    id_payment_method = models.AutoField(primary_key=True)
+    method_name = models.CharField(max_length=255)
+    creation_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'payment_method'
+
+
+class PaymentStatus(models.Model):
+    id_payment_status = models.AutoField(primary_key=True)
+    status_name = models.CharField(max_length=255)
+    creation_date = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'payment_status'
+
+
 class Product(models.Model):
     id_product = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=100)
+    uuid = models.CharField(max_length=36)
+    name = models.CharField(max_length=255)
     description = models.CharField(max_length=255, blank=True, null=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
     image_link_alt = models.CharField(max_length=255, blank=True, null=True)
     image_link = models.CharField(max_length=255, blank=True, null=True)
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_catalog = models.ForeignKey(Catalog, models.DO_NOTHING, db_column='id_catalog', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -197,10 +132,47 @@ class Product(models.Model):
 
 
 class ProductCategory(models.Model):
-    id_category = models.OneToOneField(Category, models.DO_NOTHING, db_column='id_category', primary_key=True)  # The composite primary key (id_category, id_product) found, that is not supported. The first column is selected.
+    id_product_category = models.AutoField(primary_key=True)
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_category = models.ForeignKey(Category, models.DO_NOTHING, db_column='id_category')
     id_product = models.ForeignKey(Product, models.DO_NOTHING, db_column='id_product')
 
     class Meta:
         managed = False
         db_table = 'product_category'
-        unique_together = (('id_category', 'id_product'),)
+
+
+class Receipt(models.Model):
+    id_receipt = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
+    receipt_date = models.DateField()
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_order = models.ForeignKey(Order, models.DO_NOTHING, db_column='id_order', blank=True, null=True)
+    id_payment_method = models.ForeignKey(PaymentMethod, models.DO_NOTHING, db_column='id_payment_method', blank=True, null=True)
+    id_payment_status = models.ForeignKey(PaymentStatus, models.DO_NOTHING, db_column='id_payment_status', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'receipt'
+
+
+class Sector(models.Model):
+    id_sector = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_organization = models.ForeignKey(Organization, models.DO_NOTHING, db_column='id_organization', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sector'
+
+
+class SectorCategory(models.Model):
+    id_sector_category = models.AutoField(primary_key=True)
+    creation_date = models.DateTimeField(blank=True, null=True)
+    id_sector = models.ForeignKey(Sector, models.DO_NOTHING, db_column='id_sector')
+    id_category = models.ForeignKey(Category, models.DO_NOTHING, db_column='id_category')
+
+    class Meta:
+        managed = False
+        db_table = 'sector_category'

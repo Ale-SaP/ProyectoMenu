@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render, HttpResponse, Http404, get_object_or_404
 
 
-from usermenu.models import Product, OrgConfigs, Category
+from usermenu.models import Product, OrgConfig, Category
 
 def categories(request):
     categories = Category.objects.all()

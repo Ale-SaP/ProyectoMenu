@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
 from django.conf import settings
-from usermenu.models import OrgConfigs
+from usermenu.models import OrgConfig
 from django.conf.urls.static import static
 # No debería estar llamando al index desde acá, hay que moverlo al usermenu. Acá una landing simple y fue
 def index(request):
-    configs = (OrgConfigs.objects.get(id_org = 1))
+    configs = (OrgConfig.objects.get(id_org = 1))
     return render(request, 'index.html', {'configs': configs})
 
 urlpatterns = [

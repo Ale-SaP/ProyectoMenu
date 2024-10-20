@@ -1,80 +1,150 @@
-CREATE DATABASE proyecto_menu;
+drop database IF exists proyecto_ecommerce;
 
-CREATE USER 'django'@'localhost' IDENTIFIED BY 'django';
-GRANT INDEX, ALTER, REFERENCES, SELECT, INSERT, UPDATE, DELETE, CREATE ON proyecto_menu.* TO 'django'@'localhost';
+CREATE DATABASE IF NOT exists proyecto_ecommerce;
 
-USE proyecto_menu;
+use proyecto_ecommerce;
 
-CREATE TABLE IF NOT EXISTS `organization` (
-  `id_org` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(100) NOT NULL,
-  `location` VARCHAR(255) NOT NULL,
-  `status` BOOLEAN NOT NULL DEFAULT TRUE,
-  `attendant` VARCHAR(255)
-);
+CREATE user if not exists 'django'@'localhost' IDENTIFIED BY 'django';
+GRANT INDEX, ALTER, REFERENCES, SELECT, INSERT, UPDATE, DELETE, CREATE ON proyecto_ecommerce.* TO 'django'@'localhost';
 
-CREATE TABLE IF NOT EXISTS `org_configs` (
-  `id_org_configs` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `id_org` INT NOT NULL,
-  `nombre_tienda` VARCHAR(255),
-  `contenido_inicial` INT,
-  `logo_url` VARCHAR(255),
-  `descripcion_logo` VARCHAR(255),
-  `texto_superior` VARCHAR(255),
-  `horario_atencion` VARCHAR(255),
-  `telefono_contacto` VARCHAR(50),
-  INDEX (`id_org`)
-);
+CREATE TABLE
+  organization (
+    id_organization INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    name VARCHAR(255) NOT NULL
+  );
 
-CREATE TABLE IF NOT EXISTS `menu` (
-  `id_menu` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(100),
-  `creation_date` DATE DEFAULT NULL,
-  `status` BOOLEAN DEFAULT TRUE,
-  `id_org` INT NOT NULL
-);
+CREATE TABLE
+  sector (
+    id_sector INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_organization INT,
+    FOREIGN KEY (id_organization) REFERENCES organization (id_organization)
+  );
 
-CREATE TABLE IF NOT EXISTS `menu_product` (
-  `id_menu` INT NOT NULL,
-  `id_product` INT NOT NULL,
-  PRIMARY KEY (`id_menu`, `id_product`)
-);
+CREATE TABLE
+  catalog (
+    id_catalog INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    name VARCHAR(255) NOT NULL,
+    status INT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_organization INT,
+    FOREIGN KEY (id_organization) REFERENCES organization (id_organization)
+  );
 
-CREATE TABLE IF NOT EXISTS `product` (
-  `id_product` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(100) NOT NULL,
-  `description` VARCHAR(255),
-  `price` DECIMAL(10,2) NOT NULL,
-  `status` BOOLEAN DEFAULT true,
-  `image_link` VARCHAR(255),
-  `image_link_alt` VARCHAR(255),
-  ALTER TABLE `product`
-);
+CREATE TABLE
+  category (
+    id_category INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    name VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
 
-CREATE TABLE IF NOT EXISTS `category` (
-  `id_category` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(255) NOT NULL,
-  `svg_path` VARCHAR(255)
-);
+CREATE TABLE
+  sector_category (
+    id_sector_category INT PRIMARY KEY AUTO_INCREMENT,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_sector INT NOT NULL,
+    id_category INT NOT NULL,
+    FOREIGN KEY (id_sector) REFERENCES sector (id_sector),
+    FOREIGN KEY (id_category) REFERENCES category (id_category)
+  );
 
-CREATE TABLE IF NOT EXISTS `product_category` (
-  `id_category` INT NOT NULL,
-  `id_product` INT NOT NULL,
-  PRIMARY KEY (`id_category`, `id_product`)
-);
+CREATE TABLE
+  product (
+    id_product INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NULL,
+    price DECIMAL(10, 2),
+    status INT NULL,
+    image_link_alt VARCHAR(255) NULL,
+    image_link VARCHAR(255) NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_catalog INT,
+    FOREIGN KEY (id_catalog) REFERENCES catalog (id_catalog)
+  );
 
--- Agregar llaves foráneas y restricciones
+CREATE TABLE
+  client (
+    id_client INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    name VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
 
-ALTER TABLE `org_configs`
-  ADD CONSTRAINT `org_configs_id_org_fk` FOREIGN KEY (`id_org`) REFERENCES `organization` (`id_org`);
+CREATE TABLE
+  `order` (
+    id_order INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    order_date DATE NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_client INT,
+    FOREIGN KEY (id_client) REFERENCES client (id_client)
+  );
 
-ALTER TABLE `menu`
-  ADD CONSTRAINT `menu_id_org_fk` FOREIGN KEY (`id_org`) REFERENCES `organization` (`id_org`);
+CREATE TABLE
+  payment_method (
+    id_payment_method INT PRIMARY KEY AUTO_INCREMENT,
+    method_name VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
 
-ALTER TABLE `menu_product`
-  ADD CONSTRAINT `menu_product_id_menu_fk` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`),
-  ADD CONSTRAINT `menu_product_id_product_fk` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`);
+CREATE TABLE
+  payment_status (
+    id_payment_status INT PRIMARY KEY AUTO_INCREMENT,
+    status_name VARCHAR(255) NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );
 
-ALTER TABLE `product_category`
-  ADD CONSTRAINT `product_category_id_product_fk` FOREIGN KEY (`id_product`) REFERENCES `product` (`id_product`),
-  ADD CONSTRAINT `product_category_id_category_fk` FOREIGN KEY (`id_category`) REFERENCES `category` (`id_category`);
+CREATE TABLE
+  receipt (
+    id_receipt INT PRIMARY KEY AUTO_INCREMENT,
+    uuid CHAR(36) NOT NULL DEFAULT (UUID ()),
+    receipt_date DATE NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_order INT,
+    id_payment_method INT,
+    id_payment_status INT,
+    FOREIGN KEY (id_order) REFERENCES `order` (id_order),
+    FOREIGN KEY (id_payment_method) REFERENCES payment_method (id_payment_method),
+    FOREIGN KEY (id_payment_status) REFERENCES payment_status (id_payment_status)
+  );
+
+CREATE TABLE
+  org_config (
+    id_org_config INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_tienda VARCHAR(255) NULL,
+    contenido_inicial INT NULL,
+    logo_url VARCHAR(255) NULL,
+    descripcion_logo VARCHAR(255) NULL,
+    texto_superior VARCHAR(255) NULL,
+    horario_atencion VARCHAR(255) NULL,
+    telefono_contacto VARCHAR(50) NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_organization INT,
+    FOREIGN KEY (id_organization) REFERENCES organization (id_organization)
+  );
+
+CREATE TABLE
+  detail (
+    id_detail INT PRIMARY KEY AUTO_INCREMENT,
+    quantity INT NOT NULL,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_order INT,
+    id_product INT,
+    FOREIGN KEY (id_order) REFERENCES `order` (id_order),
+    FOREIGN KEY (id_product) REFERENCES product (id_product)
+  );
+
+CREATE TABLE
+  product_category (
+    id_product_category INT PRIMARY KEY AUTO_INCREMENT,
+    creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_category INT NOT NULL,
+    id_product INT NOT NULL,
+    FOREIGN KEY (id_category) REFERENCES category (id_category),
+    FOREIGN KEY (id_product) REFERENCES product (id_product)
+  );
