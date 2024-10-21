@@ -46,16 +46,16 @@
             </div>
           </div>
           <ul
-            class="flex flex-nowrap items-center justify-between px-2 border-top-solid mt-2 w-full pb-4"
+            class="flex flex-wrap sm:flex-nowrap items-center justify-between px-2 border-top-solid mt-2 w-full pb-4"
           >
-            <li class="w-auto">
+            <li class="w-full sm:w-auto flex justify-center mb-4 sm:mb-0">
               <img
                 src="{{ configs.logo_url }}"
                 alt="{{ configs.descripcion_logo }}"
                 class="w-28 md:w-32 h-auto"
               />
             </li>
-            <li class="flex items-center justify-end w-auto md:w-3/5">
+            <li class="flex items-center justify-end w-4/5 sm:w-3/5">
               <div class="relative flex w-full items-center">
                 <!-- Search Input -->
                 <input
