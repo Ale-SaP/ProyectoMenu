@@ -35,6 +35,7 @@ DEFAULT_CHARSET = 'utf-8'
 
 INSTALLED_APPS = [
     'usermenu',
+    'simple_svg',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,6 +127,8 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = 'static/'
+
+SVG_DIR = os.path.join(BASE_DIR, 'staticfiles/svg') 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

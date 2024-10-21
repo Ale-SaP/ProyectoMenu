@@ -1,3 +1,4 @@
+{% load static %}
 <div>
   <!-- Title and close button-->
   <div class="sticky top-0">
@@ -46,9 +47,9 @@
     </article>
     <div class="flex justify-center md:justify-start items-center mb-6 pb-6">
       <img
-        src="{{ product.image_link }}"
+        src="{% static 'images/stock_instrument_large_image.png' %}"
         alt="{{ product.image_alt }}"
-        class="w-full max-w-[200px] md:max-w-[350px] h-auto rounded-lg"
+        class="w-auto max-w-[300px] md:max-w-[350px] h-auto rounded-lg"
       />
     </div>
     <div

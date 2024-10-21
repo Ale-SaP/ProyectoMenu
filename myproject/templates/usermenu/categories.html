@@ -3,9 +3,10 @@
     <li class="text-center">
         <a href="#" hx-get="/usermenu/content/{{ category.id_category|lower }}" hx-target="#content-section" hx-swap="innerHTML">
             <div class="m-3 flex h-20 w-20 items-center justify-center rounded-full border-dashed border-2 border-gray-500">
-                {{ category.svg|safe }}
+                {% load svg %}
+                {% svg 'categories/default' %}
             </div>
-            <p class="font-md-text">{{ category.name }}</p>
+            <p class="font-md-text font-semibold">{{ category.name }}</p>
         </a>
     </li>
     {% endfor %}
