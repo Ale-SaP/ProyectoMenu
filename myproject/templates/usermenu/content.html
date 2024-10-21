@@ -1,4 +1,8 @@
-{% load static %}
+{% load static %} {% if query and not rows %}
+<p>No products found matching "{{ query|escape }}".</p>
+{% elif not query and not rows %}
+<p>Please enter a search term.</p>
+{% else %}
 <ul class="mt-0 px-2 grid grid-cols-1 sm:grid-cols-2 gap-x-8">
   {% for row in rows %}
   <li class="flex border-b border-dashed pb-4">
@@ -76,6 +80,7 @@
   </li>
   {% endfor %}
 </ul>
+{% endif %}
 
 <!-- Modal -->
 <div
@@ -92,4 +97,4 @@
 </div>
 
 <!-- JavaScript -->
-<script src="/static/js/modal.js"></script>
+<script src="{% static 'js/modal.js' %}"></script>

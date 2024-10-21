@@ -6,12 +6,12 @@
     },
     {
         "id": "2",
-        "name": "Bajos",
+        "name": "Baterias",
         "svg_path":  "svg/categories/default.svg"
     },
     {
         "id": "3",
-        "name": "Baterias",
+        "name": "Bajos",
         "svg_path": "svg/categories/default.svg"
     }
 ]

@@ -6,4 +6,5 @@ urlpatterns = [
     path('content/<int:category>/', views.content, name='content'),
     path('modal_content/<str:product_id>/', views.modal_content, name='modal_content'),
     path('shopping_cart/', views.shopping_cart, name='shopping_cart'),
+    path('search/', views.search, name='search'),
 ]
