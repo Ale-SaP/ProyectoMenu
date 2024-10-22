@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ configs.nombre_tienda }}</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
     {% load static %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap"
       rel="stylesheet"
@@ -151,6 +153,5 @@
       hx-target="#shopping_cart"
       hx-swap="outerHTML"
     ></div>
-    <script src="{% static 'js/cart.js' %}"></script>
   </body>
 </html>
