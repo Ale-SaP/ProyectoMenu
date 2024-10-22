@@ -1,3 +1,14 @@
-Django==5.1  # You might adjust this to the exact version you're using.
-mysqlclient  # Required for the MySQL database.
-whitenoise  # Required for static file serving.
+# Adjust Django to the exact version you're using.
+Django==5.1
+
+# Required for the MySQL database.
+mysqlclient
+
+# Required for static file serving.
+whitenoise
+
+# For loading environment variables from .env files.
+python-dotenv
+
+# For SVG handling in Django templates.
+simple-svg
