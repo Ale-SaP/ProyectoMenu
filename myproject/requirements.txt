@@ -11,4 +11,6 @@ whitenoise
 python-dotenv
 
 # For SVG handling in Django templates.
-simple-svg
+django-simple-svg
+
+gunicorn
