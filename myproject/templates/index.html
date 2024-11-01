@@ -146,7 +146,7 @@
         <section id="content" class="mt-4 md:flex md:flex-col">
           <div
             id="content-section"
-            hx-get="/usermenu/content/{{ configs.contenido_inicial }}"
+            hx-get="/usermenu/content/{{ selected_category }}"
             hx-trigger="load"
             hx-target="#content-section"
             hx-swap="innerHTML"

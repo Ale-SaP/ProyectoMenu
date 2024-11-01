@@ -13,10 +13,12 @@ class SearchForm(forms.Form):
 
 def categories(request):
     categories = Category.objects.all()
-    return render(request, 'usermenu/categories.html', {'categories': categories})
+    return render(request, 'usermenu/categories.html', {
+        'categories': categories
+    })
+
 
 def content(request, category_id=None):
-    print(request, category_id)
     if category_id:
         # Store the selected category in the session
         request.session['selected_category'] = category_id
@@ -32,13 +34,18 @@ def content(request, category_id=None):
         default_config = get_object_or_404(OrgConfig, id_organization=1)
         if default_config.default_category:
             category = default_config.default_category
+            category_id = category.id_category
+            request.session['selected_category'] = category_id
         else:
             raise Http404("Default category not set in OrgConfig.")
 
     # Retrieve products based on the category
     products = Product.objects.filter(productcategory__id_category=category.id_category)
 
-    return render(request, 'usermenu/content.html', {'rows': products, 'category': category})
+    return render(request, 'usermenu/content.html', {
+        'rows': products,
+        'category': category
+    })
 
 def modal_content(request, product_id):
     try:
@@ -69,7 +76,7 @@ def search(request):
                 Q(productcategory__id_category__name__icontains=query)
             ).distinct()
         else:
-            products = Product.objects.none()
+            return content(request)
     else:
         products = Product.objects.none()
         query = ''

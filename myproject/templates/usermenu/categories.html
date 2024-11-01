@@ -1,16 +1,35 @@
-<!-- categories.html -->
+<!-- usermenu/templates/usermenu/categories.html -->
+
 <ul class="flex px-4 overflow-x-auto pb-2 border-b border-solid border-black">
     {% for category in categories %}
     <li class="text-center">
         <a href="#" 
            hx-get="{% url 'content_with_category' category.id_category %}" 
            hx-target="#content-section" 
-           hx-swap="innerHTML">
-            <div class="m-3 flex h-20 w-20 items-center justify-center rounded-full border-dashed border-2 border-gray-500">
+           hx-swap="innerHTML"
+           class="block category-link"
+           data-category-id="{{ category.id_category }}">
+            <div 
+                class="m-3 flex h-20 w-20 items-center justify-center rounded-full border-dashed border-2 
+                {% if category.id_category == selected_category %}
+                    border-blue-500 bg-blue-100
+                {% else %}
+                    border-gray-500 bg-white
+                {% endif %}"
+            >
                 {% load svg %}
                 {% svg 'categories/default' %}
             </div>
-            <p class="font-md-text font-semibold">{{ category.name }}</p>
+            <p 
+                class="font-md-text font-semibold 
+                {% if category.id_category == selected_category %}
+                    text-blue-600
+                {% else %}
+                    text-gray-800
+                {% endif %}"
+            >
+                {{ category.name }}
+            </p>
         </a>
     </li>
     {% endfor %}
