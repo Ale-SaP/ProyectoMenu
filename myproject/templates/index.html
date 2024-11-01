@@ -132,6 +132,17 @@
           </div>
         </section>
 
+        <!-- Shopping Cart Section -->
+        <div class="mx-2">
+          <div
+            id="shopping_cart"
+            hx-get="/usermenu/shopping_cart"
+            hx-trigger="load"
+            hx-target="#shopping_cart"
+            hx-swap="outerHTML"
+          ></div>
+        </div>
+
         <section id="content" class="mt-4 md:flex md:flex-col">
           <div
             id="content-section"
@@ -145,13 +156,5 @@
         </section>
       </main>
     </div>
-    <!-- Shopping Cart Section -->
-    <div
-      id="shopping_cart"
-      hx-get="/usermenu/shopping_cart"
-      hx-trigger="load"
-      hx-target="#shopping_cart"
-      hx-swap="outerHTML"
-    ></div>
   </body>
 </html>

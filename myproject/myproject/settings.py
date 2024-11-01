@@ -35,6 +35,8 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  
+
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 DEFAULT_CHARSET = 'utf-8'

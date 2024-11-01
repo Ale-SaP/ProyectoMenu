@@ -148,3 +148,33 @@ CREATE TABLE
     FOREIGN KEY (id_category) REFERENCES category (id_category),
     FOREIGN KEY (id_product) REFERENCES product (id_product)
   );
+
+
+DELIMITER $$
+
+CREATE PROCEDURE search_products(IN search_term VARCHAR(255))
+BEGIN
+    SELECT DISTINCT
+        p.id_product,
+        p.uuid,
+        p.name,
+        p.description,
+        p.price,
+        p.status,
+        p.image_link_alt,
+        p.image_link,
+        p.creation_date,
+        p.id_catalog
+    FROM
+        product p
+    LEFT JOIN
+        product_category pc ON p.id_product = pc.id_product
+    LEFT JOIN
+        category c ON pc.id_category = c.id_category
+    WHERE
+        p.name LIKE CONCAT('%', search_term, '%')
+        OR p.description LIKE CONCAT('%', search_term, '%')
+        OR c.name LIKE CONCAT('%', search_term, '%');
+END $$
+
+DELIMITER ;
