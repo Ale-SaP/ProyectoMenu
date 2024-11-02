@@ -63,7 +63,24 @@ def modal_content(request, id_product):
         raise Http404("Invalid product or category")
 
 def shopping_cart(request):
-    return render(request, 'usermenu/shopping_cart.html')
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total = 0
+
+    for id_product, quantity in cart.items():
+        product = get_object_or_404(Product, id_product=id_product)
+        subtotal = product.price * quantity
+        total += subtotal
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'subtotal': subtotal,
+        })
+
+    return render(request, 'usermenu/shopping_cart.html', {
+        'rows': cart_items,
+        'subtotal': total,
+    })
 
 def search(request):
     form = SearchForm(request.GET)
@@ -99,30 +116,12 @@ def add_to_cart(request, id_product):
     
     request.session['cart'] = cart
     request.session.modified = True
-    return HttpResponse("200")
+    return redirect(shopping_cart)
 
 def view_cart(request):
     """
     Display the contents of the shopping cart.
     """
-    cart = request.session.get('cart', {})
-    cart_items = []
-    total = 0
-
-    for id_product, quantity in cart.items():
-        product = get_object_or_404(Product, id=id_product)
-        subtotal = product.price * quantity
-        total += subtotal
-        cart_items.append({
-            'product': product,
-            'quantity': quantity,
-            'subtotal': subtotal,
-        })
-
-    context = {
-        'cart_items': cart_items,
-        'total': total,
-    }
 
 
 def remove_from_cart(request, id_product):
