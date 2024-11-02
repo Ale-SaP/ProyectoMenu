@@ -4,6 +4,7 @@ from django.db.models import Q
 from django import forms
 
 from usermenu.models import Product, OrgConfig, Category
+from usermenu.context_processors import cart_items, cart_operations, selected_category
 
 class SearchForm(forms.Form):
     q = forms.CharField(
@@ -21,10 +22,10 @@ def categories(request):
 def content(request, category_id=None):
     if category_id:
         # Store the selected category in the session
-        request.session['selected_category'] = category_id
+        selected_category(request).update({"category_id": category_id})
     else:
         # Try to get the category from the session
-        category_id = request.session.get('selected_category')
+        category_id = selected_category(request).get("category_id")
 
     if category_id:
         # Use the category from the session or parameter
@@ -63,22 +64,26 @@ def modal_content(request, id_product):
         raise Http404("Invalid product or category")
 
 def shopping_cart(request):
-    cart = request.session.get('cart', {})
-    cart_items = []
+    cart_items_call = cart_items(request).get("cart_items")
+    print(cart_items_call)
+    final_cart_with_data = []
     total = 0
 
-    for id_product, quantity in cart.items():
-        product = get_object_or_404(Product, id_product=id_product)
+    for item in cart_items_call:
+        product = Product.objects.get(id_product=item['product'].id_product)
+        quantity = item['quantity']
+        print(product)
+        print(product)
         subtotal = product.price * quantity
         total += subtotal
-        cart_items.append({
+        final_cart_with_data.append({
             'product': product,
             'quantity': quantity,
             'subtotal': subtotal,
         })
 
     return render(request, 'usermenu/shopping_cart.html', {
-        'rows': cart_items,
+        'rows': final_cart_with_data,
         'subtotal': total,
     })
 
@@ -104,18 +109,13 @@ def search(request):
 
 def add_to_cart(request, id_product):
     """
-    Add a specified quantity of a product to the shopping cart.
+    Adds a product to the shopping cart using the cart_operations context processor.
     """
-    product = get_object_or_404(Product, id_product=id_product)
-    cart = request.session.get('cart', {})
     quantity = int(request.POST.get('unit_numbers', 1))
-    if id_product in cart:
-        cart[str(id_product)] += quantity
-    else:
-        cart[str(id_product)] = quantity
+    operations = cart_operations(request)
+    operations = operations.get("add_to_cart")
+    operations(id_product, quantity)
     
-    request.session['cart'] = cart
-    request.session.modified = True
     return redirect(shopping_cart)
 
 def view_cart(request):
