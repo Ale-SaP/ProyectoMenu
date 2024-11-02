@@ -56,72 +56,80 @@
       class="flex flex-row sticky bottom-12 border-t-2 bg-white bg-opacity-75 border-dashed border-gray-500"
     >
       <div class="w-1/2"><!-- Extras --></div>
-      <div class="w-1/2 flex flex-col justify-end items-start space-y-4">
-        <p class="font-title-xl">${{ product.price }}</p>
-        <div class="flex flex-row space-x-2">
-          <!-- Buttons row-->
-          <button id="decrement-button" class="rounded-cta-black-medium px-2">
-            <!-- Minus icon SVG -->
-            <svg
-              width="16"
-              height="2"
-              viewBox="0 0 16 2"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+      <form
+        hx-post="{% url 'add_to_cart' product.id_product %}"
+        hx-trigger="click from:.submit-btn"
+        hx-swap="none"
+      >
+        {% csrf_token %}
+        <div class="w-1/2 flex flex-col justify-end items-start space-y-4">
+          <p class="font-title-xl">${{ product.price }}</p>
+          <div class="flex flex-row space-x-2">
+            <!-- Buttons row-->
+            <button
+              id="decrement-button"
+              type="button"
+              class="rounded-cta-black-medium px-2"
             >
-              <path
-                d="M1.33337 1H14.6667"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-          <input
-            type="number"
-            id="unit_numbers"
-            name="unit_numbers"
-            min="1"
-            max="100"
-            value="1"
-            placeholder="1"
-            class="p-2 w-16 border-2 border-solid border-black rounded-lg text-center"
-          />
-          <button id="increment-button" class="rounded-cta-black-medium px-2">
-            <!-- Plus icon SVG -->
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+              <!-- Minus icon SVG -->
+              <svg
+                width="16"
+                height="2"
+                viewBox="0 0 16 2"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.33337 1H14.6667"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <input
+              type="number"
+              id="unit_numbers"
+              name="unit_numbers"
+              min="1"
+              max="100"
+              value="1"
+              class="p-2 w-16 border-2 border-solid border-black rounded-lg text-center"
+            />
+            <button
+              id="increment-button"
+              type="button"
+              class="rounded-cta-black-medium px-2"
             >
-              <path
-                d="M10 3.33331V16.6666"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M3.33337 10H16.6667"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
-        <form
-          hx-post="{% url 'add_to_cart' product.id_product %}"
-          hx-trigger="click"
-          hx-swap="none"
-        >
-          {% csrf_token %}
+              <!-- Plus icon SVG -->
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M10 3.33331V16.6666"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M3.33337 10H16.6667"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
           <button
-            class="rounded-orange-cta-button p-2"
+            class="rounded-orange-cta-button p-2 submit-btn"
             id="add-to-cart-button"
             data-product-id="{{ product.id_product }}"
             data-product-name="{{ product.name }}"
@@ -131,8 +139,8 @@
           >
             <p class="font-subtitle-lg">Agregar al carrito</p>
           </button>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

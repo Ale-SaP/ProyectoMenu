@@ -87,24 +87,19 @@ def search(request):
 
 def add_to_cart(request, id_product):
     """
-    Add a product to the shopping cart.
+    Add a specified quantity of a product to the shopping cart.
     """
-    # Fetch the product to ensure it exists
-    print("here!")
     product = get_object_or_404(Product, id_product=id_product)
-    
-    # Initialize the cart in the session if not present
     cart = request.session.get('cart', {})
-    
-    # Add or update the product quantity
+    quantity = int(request.POST.get('unit_numbers', 1))
     if id_product in cart:
-        cart[id_product] += 1
+        cart[str(id_product)] += quantity
     else:
-        cart[id_product] = 1
+        cart[str(id_product)] = quantity
     
-    # Save the updated cart back to the session
     request.session['cart'] = cart
-    return
+    request.session.modified = True
+    return HttpResponse("200")
 
 def view_cart(request):
     """
