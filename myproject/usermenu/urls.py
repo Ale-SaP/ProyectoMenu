@@ -6,7 +6,9 @@ from . import views
 urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('content/<int:category_id>/', views.content, name='content_with_category'),
-    path('modal_content/<str:product_id>/', views.modal_content, name='modal_content'),
-    path('shopping_cart/', views.shopping_cart, name='shopping_cart'),
+    path('modal_content/<str:id_product>/', views.modal_content, name='modal_content'),
     path('search/', views.search, name='search'),
+    path('shopping_cart/', views.shopping_cart, name='shopping_cart'),
+    path('shopping-cart-add/<str:id_product>', views.add_to_cart, name='add_to_cart'),
+    path('shopping-cart/remove/<str:id_product>/', views.remove_from_cart, name='remove_from_cart'),
 ]

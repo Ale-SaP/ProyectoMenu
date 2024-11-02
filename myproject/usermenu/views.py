@@ -47,10 +47,10 @@ def content(request, category_id=None):
         'category': category
     })
 
-def modal_content(request, product_id):
+def modal_content(request, id_product):
     try:
-        getProduct = get_object_or_404(Product, id_product=product_id)
-        getCategories = Category.objects.filter(productcategory__id_product=product_id)
+        getProduct = get_object_or_404(Product, id_product=id_product)
+        getCategories = Category.objects.filter(productcategory__id_product=id_product)
         getCategoryNames = getCategories.values_list('name', flat=True)
 
         return render(request, 'usermenu/modal_content.html', {
@@ -84,3 +84,58 @@ def search(request):
         'rows': products,
         'query': query,
     })
+
+def add_to_cart(request, id_product):
+    """
+    Add a product to the shopping cart.
+    """
+    # Fetch the product to ensure it exists
+    print("here!")
+    product = get_object_or_404(Product, id_product=id_product)
+    
+    # Initialize the cart in the session if not present
+    cart = request.session.get('cart', {})
+    
+    # Add or update the product quantity
+    if id_product in cart:
+        cart[id_product] += 1
+    else:
+        cart[id_product] = 1
+    
+    # Save the updated cart back to the session
+    request.session['cart'] = cart
+    return
+
+def view_cart(request):
+    """
+    Display the contents of the shopping cart.
+    """
+    cart = request.session.get('cart', {})
+    cart_items = []
+    total = 0
+
+    for id_product, quantity in cart.items():
+        product = get_object_or_404(Product, id=id_product)
+        subtotal = product.price * quantity
+        total += subtotal
+        cart_items.append({
+            'product': product,
+            'quantity': quantity,
+            'subtotal': subtotal,
+        })
+
+    context = {
+        'cart_items': cart_items,
+        'total': total,
+    }
+
+
+def remove_from_cart(request, id_product):
+    """
+    Remove a product from the shopping cart.
+    """
+    cart = request.session.get('cart', {})
+    
+    if id_product in cart:
+        del cart[id_product]
+        request.session['cart'] = cart

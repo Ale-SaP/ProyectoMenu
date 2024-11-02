@@ -3,12 +3,13 @@
 <ul class="flex px-4 overflow-x-auto pb-2 border-b border-solid border-black">
     {% for category in categories %}
     <li class="text-center">
-        <a href="#" 
-           hx-get="{% url 'content_with_category' category.id_category %}" 
+        <a href="{% url 'content_with_category' category.id_category %}" 
+           hx-get="{% url 'content_with_category' category.id_category %}"
            hx-target="#content-section" 
            hx-swap="innerHTML"
            class="block category-link"
-           data-category-id="{{ category.id_category }}">
+           data-category-id="{{ category.id_category }}"
+           aria-current="{% if category.id_category == selected_category %}page{% else %}false{% endif %}">
             <div 
                 class="m-3 flex h-20 w-20 items-center justify-center rounded-full border-dashed border-2 
                 {% if category.id_category == selected_category %}

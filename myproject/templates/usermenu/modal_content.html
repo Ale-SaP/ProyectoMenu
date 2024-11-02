@@ -114,16 +114,24 @@
             </svg>
           </button>
         </div>
-        <button
-          class="rounded-orange-cta-button p-2"
-          id="add-to-cart-button"
-          data-product-id="{{ product.id_product }}"
-          data-product-name="{{ product.name }}"
-          data-product-price="{{ product.price }}"
-          onclick="closeModal()"
+        <form
+          hx-post="{% url 'add_to_cart' product.id_product %}"
+          hx-trigger="click"
+          hx-swap="none"
         >
-          <p class="font-subtitle-lg">Agregar al carrito</p>
-        </button>
+          {% csrf_token %}
+          <button
+            class="rounded-orange-cta-button p-2"
+            id="add-to-cart-button"
+            data-product-id="{{ product.id_product }}"
+            data-product-name="{{ product.name }}"
+            data-product-price="{{ product.price }}"
+            onclick="closeModal()"
+            type="submit"
+          >
+            <p class="font-subtitle-lg">Agregar al carrito</p>
+          </button>
+        </form>
       </div>
     </div>
   </div>
