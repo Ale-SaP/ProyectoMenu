@@ -1,6 +1,6 @@
 <!-- usermenu/templates/usermenu/categories.html -->
 
-<ul class="flex px-4 overflow-x-auto pb-2 border-b border-solid border-black">
+<ul class="flex px-4 overflow-x-auto pb-4 mb-8 border-b border-solid border-black">
     {% for category in categories %}
     <li class="text-center">
         <a href="{% url 'content_with_category' category.id_category %}" 

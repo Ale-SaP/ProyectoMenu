@@ -2,11 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- Correct charset declaration -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token }}" />
     <title>{{ configs.nombre_tienda }}</title>
-    <!-- Tailwind CSS -->
     {% load static %}
     <script src="https://cdn.tailwindcss.com"></script>
     <link
@@ -15,7 +13,6 @@
     />
     <link href="{% static 'css/fonts.css' %}" rel="stylesheet" />
     <link href="{% static 'css/buttons.css' %}" rel="stylesheet" />
-    <!-- HTMX -->
     <script src="https://unpkg.com/htmx.org@2.0.3"></script>
   </head>
   <body
@@ -95,16 +92,20 @@
                 </button>
               </form>
             </li>
-            <li class="w-auto">
+            <li class="w-auto md:hidden">
               <div>
-                <a href="#" class="block p-2 text-white rounded">
+                <button
+                  id="mobile-tab-button"
+                  class="block p-2 text-gray-500 rounded hover:text-blue-600"
+                  onclick="toggleMobileTab()"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
-                    stroke="#000000"
-                    class="w-6 sm:w-8 h-auto"
+                    stroke="currentColor"
+                    class="w-8 h-auto"
                   >
                     <path
                       stroke-linecap="round"
@@ -112,44 +113,140 @@
                       d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
                     />
                   </svg>
-                </a>
+                </button>
               </div>
             </li>
           </ul>
         </nav>
       </header>
 
-      <main class="mx-auto pt-8">
-        <section id="categories">
-          <div id="categories-content">
-            <!-- Categories will be loaded here -->
-          </div>
-        </section>
+      <!-- Tab Navigation for Desktop -->
+      <div
+        class="border-b border-gray-200 dark:border-gray-700 hidden md:block mt-4"
+      >
+        <ul
+          class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400"
+        >
+          <li class="me-2">
+            <button
+              id="tab-content"
+              onclick="selectTab('content')"
+              class="tab-button inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-gray-300 group"
+            >
+              <svg
+                class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"
+                />
+              </svg>
+              <p class="font-subtitle-lg font-semibold">Content</p>
+            </button>
+          </li>
+          <li class="me-2">
+            <button
+              id="tab-cart"
+              onclick="selectTab('shopping_cart')"
+              class="tab-button inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-blue-600 hover:border-gray-300 group"
+            >
+              <svg
+                class="w-4 h-4 me-2 text-gray-400 group-hover:text-blue-600"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                />
+              </svg>
+              <p class="font-subtitle-lg font-semibold">Shopping Cart</p>
+            </button>
+          </li>
+        </ul>
+      </div>
 
-        <!-- Shopping Cart Section -->
-        <div class="mx-2">
-          <div
-            id="shopping_cart"
-            hx-get="{% url 'shopping_cart' %}"
-            hx-trigger="load"
-            hx-target="#shopping_cart"
-            hx-swap="innerHTML"
-          ></div>
+      <!-- Tab Contents -->
+      <main class="mx-auto pt-4" id="main-section">
+        <div id="content">
+          <section id="categories">
+            <div id="categories-content">
+              <!-- Categories will be loaded here -->
+            </div>
+          </section>
+
+          <section class="mt-4 md:flex md:flex-col">
+            <div
+              id="content-section"
+              hx-get="/usermenu/content/{{ selected_category }}"
+              hx-trigger="load"
+              hx-target="#content-section"
+              hx-swap="innerHTML"
+            >
+              <!-- Content will be auto-loaded here -->
+            </div>
+          </section>
         </div>
 
-        <section id="content" class="mt-4 md:flex md:flex-col">
+        <section id="shopping_cart" class="mt-4 mx-2" style="display: none">
           <div
-            id="content-section"
-            hx-get="/usermenu/content/{{ selected_category }}"
+            id="shopping_cart-content"
+            hx-get="{% url 'shopping_cart' %}"
             hx-trigger="load"
-            hx-target="#content-section"
+            hx-target="#shopping_cart-content"
             hx-swap="innerHTML"
           >
-            <!-- Content will be auto-loaded here -->
+            <!-- Shopping Cart will be loaded here -->
           </div>
         </section>
       </main>
     </div>
+
     <script src="{% static 'js/modal.js' %}"></script>
+    <script>
+      let currentTab = "content";
+
+      function selectTab(tab) {
+        // Toggle visibility of sections
+        document.getElementById("content").style.display =
+          tab === "content" ? "block" : "none";
+        document.getElementById("shopping_cart").style.display =
+          tab === "shopping_cart" ? "block" : "none";
+
+        // Update desktop tab buttons
+        document.querySelectorAll(".tab-button").forEach((button) => {
+          button.classList.remove("text-blue-800", "border-blue-800");
+          button.classList.add("text-gray-500");
+        });
+        const selectedButton =
+          tab === "content"
+            ? document.getElementById("tab-content")
+            : document.getElementById("tab-cart");
+        selectedButton.classList.add("text-blue-800", "border-blue-800");
+        selectedButton.classList.remove("text-gray-500");
+
+        // Update mobile button style
+        const mobileButton = document.getElementById("mobile-tab-button");
+        if (tab === "shopping_cart") {
+          mobileButton.classList.add("text-blue-800");
+          mobileButton.classList.add("bg-blue-200");
+        } else {
+          mobileButton.classList.remove("text-blue-800");
+          mobileButton.classList.remove("bg-blue-200");
+        }
+
+        currentTab = tab;
+      }
+
+      function toggleMobileTab() {
+        const newTab = currentTab === "content" ? "shopping_cart" : "content";
+        selectTab(newTab);
+      }
+
+      // Set initial tab on load
+      selectTab("content");
+    </script>
   </body>
 </html>
