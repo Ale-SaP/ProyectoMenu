@@ -61,6 +61,7 @@
         hx-trigger="click from:.submit-btn"
         hx-swap="innerHTML"
         hx-target="#shopping_cart"
+        class="w-full pt-4"
       >
         {% csrf_token %}
         <div class="w-1/2 flex flex-col justify-end items-start space-y-4">
@@ -138,7 +139,7 @@
             onclick="closeModal()"
             type="submit"
           >
-            <p class="font-subtitle-lg">Agregar al carrito</p>
+            <p class="font-subtitle-lg">Add to cart</p>
           </button>
         </div>
       </form>

@@ -1,8 +1,6 @@
 <div class="w-full mt-4">
   <div class="">
-    <div
-      class="flex flex-col w-full"
-    >
+    <div class="flex flex-col w-full">
       <div class="overflow-x-auto">
         <table class="table-auto w-full">
           <thead>
@@ -49,6 +47,7 @@
                   hx-trigger="change, keyup changed delay:1.25s"
                   hx-params="unit_numbers"
                   hx-swap="innerHTML"
+                  hx-target="#shopping_cart"
                   onkeydown="if(event.key === 'Enter') { event.preventDefault(); }"
                 >
                   <input
@@ -77,11 +76,21 @@
           </tbody>
         </table>
       </div>
-      <!-- Cart Total -->
-      <div class="flex justify-end mt-4">
-        <p class="text-xl font-bold">
+    </div>
+    <!-- Cart Total -->
+    <div class="flex flex-row justify-end mt-4">
+      <div class="w-full md:w-1/4">
+        <p class="text-xl font-bold pb-8">
           Total: <span id="cart-total">{{ subtotal }}</span>
         </p>
+        <button
+          hx-get="{% url 'checkout' %}"
+          hx-target="#shopping_cart"
+          hx-swap="innerHTML"
+          class="rounded-orange-cta-button p-2"
+        >
+          <p class="font-title-xl font-bold">Create order</p>
+        </button>
       </div>
     </div>
   </div>

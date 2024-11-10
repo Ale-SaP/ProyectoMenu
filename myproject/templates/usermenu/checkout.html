@@ -1,0 +1,35 @@
+<button
+  hx-get="{% url 'shopping_cart' %}"
+  hx-target="#shopping_cart"
+  hx-trigger="click"
+  hx-swap="innerHTML"
+  class="p-2 mb-8"
+>
+  <p class="font-title-xl font-bold">Back to cart</p>
+</button>
+<div class="w-full md:px-8 mb-4 flex flex-col md:flex-row">
+  <div class="md:w-1/2">
+    <h2 class="font-title-xl">Checkout</h2>
+    <form method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <button class="rounded-orange-cta-button p-2 mt-4" type="submit">
+        <p class="font-title-xl font-bold">Place Order</p>
+      </button>
+    </form>
+  </div>
+  <div class="md:w-1/2 md:ml-4 mt-8 md:mt-0">
+    <h3 class="font-subtitle-lg">Order Summary</h3>
+    <ul class="mb-4">
+      {% for item in rows %}
+      <li class="border-b border-dashed border-gray-500 p-2">
+        <p class="font-text-md font-light">
+          {{ item.product.name }} - Quantity: {{ item.quantity }} - Subtotal:
+          {{item.subtotal }}
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="font-subtitle-lg font-light">Total: {{ total }}</p>
+  </div>
+</div>
+<div class="border-b border-solid border-black mb-8"></div>
