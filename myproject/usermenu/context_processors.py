@@ -7,9 +7,9 @@ def selected_category(request):
         if (not category):
         # Use the default category from OrgConfig
             default_config = get_object_or_404(OrgConfig, id_organization=1)
-            if default_config.default_category:
-                category = default_config.default_category
-                category_id = category.id_category
+            if default_config.contenido_inicial:
+                category = default_config.contenido_inicial
+                category_id = category
                 request.session['selected_category'] = category_id
                 
         return {
@@ -30,18 +30,25 @@ from django.shortcuts import get_object_or_404
 
 def cart_items(request):
     cart = request.session.get('cart', {})
-    cart_items = []
+    cart_items_list = []
+
+    # Ensure cart is a dictionary
+    if not isinstance(cart, dict):
+        cart = {}
+        request.session['cart'] = cart
+
     for id_product, quantity in cart.items():
         try:
             product = Product.objects.get(id_product=id_product)
-            cart_items.append({
+            cart_items_list.append({
                 'product': product.id_product,
                 'quantity': quantity,
             })
         except Product.DoesNotExist:
             continue
+
     return {
-        'cart_items': cart_items,
+        'cart_items': cart_items_list,
     }
 
 def cart_operations(request):

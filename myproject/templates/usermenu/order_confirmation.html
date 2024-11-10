@@ -1,3 +1,5 @@
+<!-- usermenu/order_confirmation.html -->
+
 <button
   hx-get="{% url 'shopping_cart' %}"
   hx-target="#shopping_cart"
@@ -9,28 +11,19 @@
 </button>
 <div class="w-full md:px-8 mb-4 flex flex-col md:flex-row">
   <div class="md:w-1/2">
-    <h2 class="font-title-xl">Checkout</h2>
-    <form
-      method="POST"
-      hx-post="{% url 'checkout' %}"
-      hx-target="#shopping_cart"
-      hx-swap="innerHTML"
-      onkeydown="if(event.key === 'Enter') { event.preventDefault(); }"
-    >
-      {% csrf_token %} {{ form.as_p }}
-      <button class="rounded-orange-cta-button p-2 mt-4" type="submit">
-        <p class="font-title-xl font-bold">Place Order</p>
-      </button>
-    </form>
+    <h2 class="font-title-xl">Order Confirmation</h2>
+    <p>Thank you for your order!</p>
+    <p>Your order number is <strong>{{ order.id_order }}</strong>.</p>
+    <p>Order Date: {{ order.order_date }}</p>
   </div>
   <div class="md:w-1/2 md:ml-4 mt-8 md:mt-0">
     <h3 class="font-subtitle-lg">Order Summary</h3>
     <ul class="mb-4">
-      {% for item in rows %}
+      {% for item in order_items %}
       <li class="border-b border-dashed border-gray-500 p-2">
         <p class="font-text-md font-light">
           {{ item.product.name }} - Quantity: {{ item.quantity }} - Subtotal:
-          {{item.subtotal }}
+          {{ item.subtotal }}
         </p>
       </li>
       {% endfor %}

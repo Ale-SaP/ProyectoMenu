@@ -27,13 +27,6 @@ class CheckoutForm(forms.Form):
             'placeholder': 'Your Email',
         })
     )
-    phone = forms.CharField(
-        max_length=50,
-        widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500',
-            'placeholder': 'Your Phone Number',
-        })
-    )
     payment_method = forms.ModelChoiceField(
         queryset=PaymentMethod.objects.all(),
         widget=forms.Select(attrs={
@@ -66,6 +59,7 @@ def content(request, category_id=None):
 
 
 def modal_content(request, id_product):
+    print(request.session.get("cart"))
     try:
         
         id_product = int(id_product)
@@ -194,6 +188,12 @@ def checkout(request):
                     id_product=item['product'],
                 )
 
+            # Fetch or create the PaymentStatus
+            payment_status, created = PaymentStatus.objects.get_or_create(
+                status_name='PENDING',
+                defaults={'creation_date': timezone.now()}
+            )
+
             # Create receipt
             receipt = Receipt.objects.create(
                 uuid=uuid.uuid4(),
@@ -201,17 +201,23 @@ def checkout(request):
                 creation_date=timezone.now(),
                 id_order=order,
                 id_payment_method=form.cleaned_data['payment_method'],
-                id_payment_status=PaymentStatus.objects.get(status_name='Pending'),
+                id_payment_status=payment_status,
             )
 
-            # Clear cart
+            # Clear cart and redirect
             request.session['cart'] = []
-
             return redirect('order_confirmation', order_id=order.id_order)
+        else:
+            # Return form with errors
+            return render(request, 'usermenu/checkout.html', {
+                'rows': final_cart_with_data,
+                'total': total,
+                'form': form,
+            })
     else:
         form = CheckoutForm()
 
-    return render(request, 'usermenu/checkout', {
+    return render(request, 'usermenu/checkout.html', {
         'rows': final_cart_with_data,
         'total': total,
         'form': form,
@@ -219,4 +225,21 @@ def checkout(request):
 
 def order_confirmation(request, order_id):
     order = get_object_or_404(Order, id_order=order_id)
-    return render(request, 'usermenu/order_confirmation.html', {'order': order})
+    order_details = Detail.objects.filter(id_order=order)
+    order_items = []
+    total = 0
+    for detail in order_details:
+        product = detail.id_product
+        quantity = detail.quantity
+        subtotal = product.price * quantity
+        total += subtotal
+        order_items.append({
+            'product': product,
+            'quantity': quantity,
+            'subtotal': subtotal,
+        })
+    return render(request, 'usermenu/order_confirmation.html', {
+        'order': order,
+        'order_items': order_items,
+        'total': total,
+    })

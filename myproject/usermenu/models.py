@@ -53,6 +53,7 @@ class Client(models.Model):
     id_client = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
+    email = models.EmailField(blank=True, null=True)
     creation_date = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -67,6 +68,9 @@ class PaymentMethod(models.Model):
 
     class Meta:
         db_table = 'payment_method'
+        
+    def __str__(self):
+        return self.method_name
 
 
 # 6. PaymentStatus (Independent)
@@ -77,6 +81,9 @@ class PaymentStatus(models.Model):
 
     class Meta:
         db_table = 'payment_status'
+    
+    def __str__(self):
+        return self.status_name
 
 
 # 7. Product (Depends on Catalog)
