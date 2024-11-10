@@ -108,7 +108,7 @@ function initializeModalEventListeners() {
 function initializeQuantityButtons() {
   const incrementButton = document.getElementById("increment-button");
   const decrementButton = document.getElementById("decrement-button");
-  const quantityInput = document.getElementById("unit_numbers");
+  const quantityInput = document.getElementById("unit_numbers_modal");
 
   if (incrementButton && decrementButton && quantityInput) {
     incrementButton.addEventListener("click", function () {
@@ -140,7 +140,6 @@ function initializeQuantityButtons() {
   }
 }
 
-// Event listener for HTMX after content swap
 document.addEventListener("htmx:afterSwap", function (event) {
   if (event.detail.target && event.detail.target.id === "modal-content") {
     // Initialize modal event listeners

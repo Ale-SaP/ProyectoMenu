@@ -33,22 +33,34 @@ def content(request, category_id=None):
     return render(request, 'usermenu/content.html', {
         'rows': products,
         'category': category
-    })
+    }) 
+
+from django.shortcuts import render, get_object_or_404
+from django.http import Http404
 
 def modal_content(request, id_product):
     try:
+        
+        id_product = int(id_product)
         getProduct = get_object_or_404(Product, id_product=id_product)
+
         getCategories = Category.objects.filter(productcategory__id_product=id_product)
         getCategoryNames = getCategories.values_list('name', flat=True)
-
+        
+        cart_items_call = cart_items(request).get("cart_items", [])
+        already_added_quantity = next(
+            (item["quantity"] for item in cart_items_call if item["product"] == id_product),
+            1
+        )
         return render(request, 'usermenu/modal_content.html', {
             'product': getProduct,
-            'categories': getCategoryNames
+            'categories': getCategoryNames,
+            'already_added_quantity': already_added_quantity
         })
-
     except Exception as e:
         print(f"Error: {e}")
         raise Http404("Invalid product or category")
+
 
 def shopping_cart(request):
     cart_items_call = cart_items(request).get("cart_items")
@@ -95,11 +107,15 @@ def add_to_cart(request, id_product):
     Adds a product to the shopping cart using the cart_operations context processor.
     """
     quantity = int(request.POST.get('unit_numbers', 1))
+    if (quantity > 100):
+        return HttpResponse(status=200)
+    if (quantity == 0):
+        return redirect('remove_from_cart', id_product=id_product)
     operations = cart_operations(request)
     operations = operations.get("add_to_cart")
     operations(id_product, quantity)
     
-    return redirect(shopping_cart)
+    return redirect("shopping_cart")
 
 def remove_from_cart(request, id_product):
     """
@@ -108,4 +124,4 @@ def remove_from_cart(request, id_product):
     operations = cart_operations(request)
     operations = operations.get("remove_from_cart")
     operations(id_product)
-    return redirect(shopping_cart)
+    return redirect("shopping_cart")

@@ -51,10 +51,7 @@ def cart_operations(request):
     def add_to_cart(id_product, quantity=1):
         cart = request.session.get('cart', {})
         
-        if str(id_product) in cart:
-            cart[str(id_product)] += quantity
-        else:
-            cart[str(id_product)] = quantity
+        cart[str(id_product)] = quantity
 
         # Save the updated cart to the session and mark it as modified
         request.session['cart'] = cart
