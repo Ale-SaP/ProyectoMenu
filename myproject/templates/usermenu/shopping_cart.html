@@ -47,7 +47,7 @@
               <td class="py-2 px-4 border-b">
                 <form
                   hx-post="{% url 'add_to_cart' item.product.id_product %}"
-                  hx-trigger="keyup changed delay:1.25s"
+                  hx-trigger="change, keyup changed delay:1.25s"
                   hx-params="unit_numbers"
                   hx-swap="innerHTML"
                   onkeydown="if(event.key === 'Enter') { event.preventDefault(); }"
