@@ -1,8 +1,28 @@
-from .models import Product
+from .models import Product, OrgConfig
 
 def selected_category(request):
+    def get_category_with_fallback():
+        category = request.session.get('selected_category')
+        
+        if (not category):
+        # Use the default category from OrgConfig
+            default_config = get_object_or_404(OrgConfig, id_organization=1)
+            if default_config.default_category:
+                category = default_config.default_category
+                category_id = category.id_category
+                request.session['selected_category'] = category_id
+                
+        return {
+            'selected_category': category
+        }
+        
+    def replace_category(category_id):
+        request.session['selected_category'] = category_id
+        request.session.modified = True
+    
     return {
-        'selected_category': request.session.get('selected_category')
+        'get_category': get_category_with_fallback,
+        'replace_category': replace_category,
     }
 
 from .models import Product
@@ -15,7 +35,7 @@ def cart_items(request):
         try:
             product = Product.objects.get(id_product=id_product)
             cart_items.append({
-                'product': product,
+                'product': product.id_product,
                 'quantity': quantity,
             })
         except Product.DoesNotExist:

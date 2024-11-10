@@ -1,4 +1,13 @@
 {% load static %}
+<div
+  id="categories-content"
+  hx-get="{% url 'categories' %}"
+  hx-trigger="load"
+  hx-target="#categories-content"
+  hx-swap="innerHTML"
+>
+  <!-- Categories will be loaded here -->
+</div>
 {% if query and not rows %}
 <p>No products found matching "{{ query|escape }}".</p>
 {% elif not query and not rows %}

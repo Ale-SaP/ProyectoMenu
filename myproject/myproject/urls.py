@@ -19,11 +19,14 @@ from django.urls import path, include
 from django.shortcuts import render
 from django.conf import settings
 from usermenu.models import OrgConfig
+from usermenu.context_processors import selected_category
 from django.conf.urls.static import static
 # No debería estar llamando al index desde acá, hay que moverlo al usermenu. Acá una landing simple y fue
 def index(request):
     configs = (OrgConfig.objects.get(id_organization = 1))
-    return render(request, 'index.html', {'configs': configs})
+    category = selected_category(request).get("get_category")()
+    category = category["selected_category"]
+    return render(request, 'index.html', {'configs': configs, 'selected_category': category})
 
 urlpatterns = [
     path('', index, name='home', ),

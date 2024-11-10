@@ -59,7 +59,8 @@
       <form
         hx-post="{% url 'add_to_cart' product.id_product %}"
         hx-trigger="click from:.submit-btn"
-        hx-swap="none"
+        hx-swap="innerHTML"
+        hx-target="#shopping_cart"
       >
         {% csrf_token %}
         <div class="w-1/2 flex flex-col justify-end items-start space-y-4">

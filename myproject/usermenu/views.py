@@ -15,32 +15,19 @@ class SearchForm(forms.Form):
 def categories(request):
     categories = Category.objects.all()
     return render(request, 'usermenu/categories.html', {
-        'categories': categories
+        'categories': categories,
+        'selected_category': selected_category(request).get("get_category")()["selected_category"]
     })
 
 
 def content(request, category_id=None):
+    update_selected_category = selected_category(request).get("replace_category")
     if category_id:
         # Store the selected category in the session
-        selected_category(request).update({"category_id": category_id})
-    else:
-        # Try to get the category from the session
-        category_id = selected_category(request).get("category_id")
-
-    if category_id:
-        # Use the category from the session or parameter
-        category = get_object_or_404(Category, id_category=category_id)
-    else:
-        # Use the default category from OrgConfig
-        default_config = get_object_or_404(OrgConfig, id_organization=1)
-        if default_config.default_category:
-            category = default_config.default_category
-            category_id = category.id_category
-            request.session['selected_category'] = category_id
-        else:
-            raise Http404("Default category not set in OrgConfig.")
-
-    # Retrieve products based on the category
+        update_selected_category(category_id)
+        
+    category_id = selected_category(request).get("get_category")()["selected_category"]
+    category = get_object_or_404(Category, id_category=category_id)
     products = Product.objects.filter(productcategory__id_category=category.id_category)
 
     return render(request, 'usermenu/content.html', {
@@ -65,23 +52,19 @@ def modal_content(request, id_product):
 
 def shopping_cart(request):
     cart_items_call = cart_items(request).get("cart_items")
-    print(cart_items_call)
     final_cart_with_data = []
     total = 0
 
     for item in cart_items_call:
-        product = Product.objects.get(id_product=item['product'].id_product)
+        product = Product.objects.get(id_product=item['product'])
         quantity = item['quantity']
-        print(product)
-        print(product)
         subtotal = product.price * quantity
         total += subtotal
         final_cart_with_data.append({
-            'product': product,
+            'product': product.__dict__,
             'quantity': quantity,
             'subtotal': subtotal,
         })
-
     return render(request, 'usermenu/shopping_cart.html', {
         'rows': final_cart_with_data,
         'subtotal': total,
@@ -118,18 +101,11 @@ def add_to_cart(request, id_product):
     
     return redirect(shopping_cart)
 
-def view_cart(request):
-    """
-    Display the contents of the shopping cart.
-    """
-
-
 def remove_from_cart(request, id_product):
     """
     Remove a product from the shopping cart.
     """
-    cart = request.session.get('cart', {})
-    
-    if id_product in cart:
-        del cart[id_product]
-        request.session['cart'] = cart
+    operations = cart_operations(request)
+    operations = operations.get("remove_from_cart")
+    operations(id_product)
+    return redirect(shopping_cart)

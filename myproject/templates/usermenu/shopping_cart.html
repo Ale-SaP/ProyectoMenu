@@ -16,13 +16,14 @@
             </tr>
           </thead>
           <tbody id="cart-table-body">
-            {% for item in cart.items %}
+            {% for item in rows %}
             <tr id="cart-item-{{ item.product.id }}">
               <td class="py-2 px-4 border-b text-center">
                 <button
-                  hx-delete="{% url 'delete_cart_item' item.id_product %}"
+                  hx-delete="{% url 'remove_from_cart' item.product.id_product %}"
                   hx-trigger="click"
-                  hx-swap="outerHTML"
+                  hx-target="#shopping_cart"
+                  hx-swap="innerHTML"
                   class="text-red-500 cursor-pointer"
                 >
                   <!-- Trash Icon SVG -->
@@ -49,7 +50,7 @@
                   min="1"
                   value="{{ item.quantity }}"
                   class="cart-item-quantity-input w-16 text-center border border-gray-300 rounded-md"
-                  hx-post="{% url 'update_cart_item_quantity' item.id_product %}"
+                  hx-post="{% url 'add_to_cart' item.product.id_product %}"
                   hx-trigger="change"
                   hx-params="value"
                   hx-swap="outerHTML"
@@ -59,7 +60,7 @@
                 {{ item.product.price }}
               </td>
               <td class="py-2 px-4 border-b cart-item-total">
-                {{ item.total }}
+                {{ item.subtotal }}
               </td>
             </tr>
             {% empty %}
@@ -75,7 +76,7 @@
       <!-- Cart Total -->
       <div class="flex justify-end mt-4">
         <p class="text-xl font-bold">
-          Total: <span id="cart-total">{{ cart.total }}</span>
+          Total: <span id="cart-total">{{ subtotal }}</span>
         </p>
       </div>
     </div>
