@@ -162,7 +162,7 @@ def checkout(request):
             'subtotal': subtotal,
         })
 
-    if request.method == 'POST':
+    if request.method == 'POST' and cart_items_call:
         form = CheckoutForm(request.POST)
         if form.is_valid():
             # Create client
